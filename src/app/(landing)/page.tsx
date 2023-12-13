@@ -2,9 +2,9 @@ import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 
-import LandingFooter from './components/LandingFooter';
-import Heading from './components/Heading';
 import ExamplePrompts from './components/ExamplePrompts';
+import Heading from './components/Heading';
+import LandingFooter from './components/LandingFooter';
 
 const LandingPage = () => {
   return (

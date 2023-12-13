@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { AnimatePresence, Variants } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { TypeAnimation } from 'react-type-animation';
 
 import { MotionDiv } from '@/components/MotionDiv';

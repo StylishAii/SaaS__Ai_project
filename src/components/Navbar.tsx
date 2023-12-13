@@ -1,5 +1,5 @@
-import { MenuIcon } from 'lucide-react';
 import { UserButton } from '@clerk/nextjs';
+import { MenuIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 
