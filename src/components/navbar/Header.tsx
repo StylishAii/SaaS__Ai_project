@@ -14,13 +14,16 @@ import { MotionDiv } from '@/components/ui/MotionDiv';
 const Header = () => {
   const [isActive, setIsActive] = useState<boolean>(false);
   const isMediumWidth = useMediaQuery('(max-width: 768px)');
-  const isSmallHeight = useMediaQuery('(max-height: 600px)');
+  const isSmallHeight = useMediaQuery('(max-height: 684px)');
 
   return (
     <div className='fixed w-full'>
       <div
         className='absolute top-4 left-4 md:top-8 md:left-8'
-        style={{ height: `calc(100vh-200px)`, width: '100vw' }}
+        style={{
+          height: `calc(100vh - ${isMediumWidth ? '0px' : '32px'})`,
+          width: '100vw',
+        }}
       >
         <MotionDiv
           variants={navBarVariants(isMediumWidth, isSmallHeight)}

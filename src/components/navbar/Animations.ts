@@ -32,7 +32,7 @@ const navBarEntryVariants: Variants = {
     translateY: 0,
     translateX: 0,
     transition: {
-      delay: 0.5 + index * 0.1,
+      delay: 0.25 + index * 0.1,
       duration: 0.65,
       opacity: { duration: 0.35, delay: 0.5 + index * 0.1 },
       ease: [0.215, 0.61, 0.355, 1],
@@ -53,7 +53,7 @@ const navBarEntryFooterVariants: Variants = {
     opacity: 1,
     y: 0,
     transition: {
-      delay: 0.5 + index * 0.1 + 0.2,
+      delay: 0.25 + index * 0.1 + 0.2,
       duration: 0.5,
       ease: [0.215, 0.61, 0.355, 1],
     },

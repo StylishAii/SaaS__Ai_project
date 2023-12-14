@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ['class'],
+  mode: 'jit',
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
@@ -16,6 +17,32 @@ module.exports = {
       },
     },
     extend: {
+      rotate3d: (theme: any) => ({
+        // default values
+        // https://tailwindcss.com/docs/rotate
+        ...theme('rotate'),
+        // new values
+        ...{
+          '-60': '-60deg',
+          '-50': '-50deg',
+          '-40': '-40deg',
+          '-35': '-35deg',
+          '-30': '-30deg',
+          '-25': '-25deg',
+          '-20': '-20deg',
+          '-15': '-15deg',
+          '-10': '-10deg',
+          10: '10deg',
+          15: '15deg',
+          20: '20deg',
+          25: '25deg',
+          30: '30deg',
+          35: '35deg',
+          40: '40deg',
+          50: '50deg',
+          60: '60deg',
+        },
+      }),
       screens: {
         'sm-height': { raw: '(min-height: 640px)' },
         'md-height': { raw: '(min-height: 800px)' },
@@ -76,5 +103,8 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+    require('@kamona/tailwindcss-perspective'),
+  ],
 };
