@@ -17,6 +17,7 @@ module.exports = {
     },
     extend: {
       screens: {
+        'sm-height': { raw: '(min-height: 640px)' },
         'md-height': { raw: '(min-height: 800px)' },
       },
       colors: {
