@@ -19,7 +19,7 @@ const Header = () => {
   return (
     <div className='fixed w-full'>
       <div
-        className='absolute top-4 left-4 md:top-8 md:left-8'
+        className='absolute top-4 left-4 md:top-8 md:left-8 pointer-events-none'
         style={{
           height: `calc(100vh - ${isMediumWidth ? '0px' : '32px'})`,
           width: '100vw',
@@ -29,7 +29,7 @@ const Header = () => {
           variants={navBarVariants(isMediumWidth, isSmallHeight)}
           initial='closed'
           animate={isActive ? 'open' : 'closed'}
-          className={`relative h-full w-full bg-primary`}
+          className={`relative h-full w-full bg-primary pointer-events-auto`}
         >
           <AnimatePresence>{isActive && <Navbar />}</AnimatePresence>
         </MotionDiv>

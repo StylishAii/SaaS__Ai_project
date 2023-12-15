@@ -14,7 +14,7 @@ interface NavbarButtonProps {
 const NavbarButton = ({ isActive, setIsActive }: NavbarButtonProps) => {
   return (
     <Button
-      className={`absolute top-0 left-0 overflow-hidden`}
+      className={`pointer-events-auto absolute top-0 left-0 overflow-hidden`}
       variant={'default'}
       size={'icon'}
       onClick={() => setIsActive(!isActive)}

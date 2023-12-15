@@ -1,9 +1,11 @@
 'use client';
 
 import { BotIcon } from 'lucide-react';
-import { Roboto } from 'next/font/google';
+import { Lato } from 'next/font/google';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+
+import { cn } from '@/lib/utils';
 
 import {
   navBarEntryFooterVariants,
@@ -11,14 +13,11 @@ import {
 } from '@/components/navbar/Animations';
 import { links } from '@/components/navbar/Data';
 import { MotionDiv } from '@/components/ui/MotionDiv';
-import { cn } from '@/lib/utils';
 
-const roboto = Roboto({ style: 'normal', weight: '700', subsets: ['latin'] });
+const lato = Lato({ style: 'normal', weight: '700', subsets: ['latin'] });
 
 const Navbar = () => {
   const pathname = usePathname();
-
-  console.log(pathname);
 
   return (
     <nav className='box-border flex h-full flex-col justify-between px-10 pt-20'>
@@ -67,7 +66,7 @@ const Navbar = () => {
           exit={'exit'}
         >
           <BotIcon className='h-10 w-10' />
-          <h1 className={cn('text-3xl mt-1 cursor-default', roboto.className)}>
+          <h1 className={cn('text-3xl mt-1 cursor-default', lato.className)}>
             ChatXYZ
           </h1>
         </MotionDiv>

@@ -7,6 +7,7 @@ const LandingLayout = ({ children }: { children: React.ReactNode }) => {
   if (userId) {
     redirect('/dashboard');
   }
+
   return <div className='h-full w-full'>{children}</div>;
 };
 
