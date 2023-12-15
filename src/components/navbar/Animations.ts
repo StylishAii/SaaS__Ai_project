@@ -3,10 +3,10 @@ import { Variants } from 'framer-motion';
 const navBarVariants = (isWidth: boolean, isHeight: boolean) => ({
   open: {
     width: isWidth ? '100%' : 450,
-    height: isHeight ? '100%' : 650,
+    height: isHeight || isWidth ? '100%' : 650,
     top: -16,
     left: -16,
-    borderRadius: 30,
+    borderRadius: isWidth ? 0 : 30,
     transition: { duration: 0.75, ease: [0.76, 0, 0.24, 1] },
   },
   closed: {

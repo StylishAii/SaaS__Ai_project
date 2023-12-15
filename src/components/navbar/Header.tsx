@@ -29,7 +29,7 @@ const Header = () => {
           variants={navBarVariants(isMediumWidth, isSmallHeight)}
           initial='closed'
           animate={isActive ? 'open' : 'closed'}
-          className='relative h-full w-full rounded-[25px] bg-primary'
+          className={`relative h-full w-full bg-primary`}
         >
           <AnimatePresence>{isActive && <Navbar />}</AnimatePresence>
         </MotionDiv>
