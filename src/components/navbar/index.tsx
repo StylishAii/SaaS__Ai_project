@@ -10,8 +10,8 @@ import { cn } from '@/lib/utils';
 import {
   navBarEntryFooterVariants,
   navBarEntryVariants,
-} from '@/components/navbar/Animations';
-import { links } from '@/components/navbar/Data';
+} from '@/components/navbar/animations';
+import { links } from '@/components/navbar/data';
 import { MotionDiv } from '@/components/ui/MotionDiv';
 
 const lato = Lato({ style: 'normal', weight: '700', subsets: ['latin'] });

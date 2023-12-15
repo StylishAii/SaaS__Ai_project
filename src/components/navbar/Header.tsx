@@ -6,9 +6,9 @@ import { useState } from 'react';
 
 import useMediaQuery from '@/hooks/useMediaQuery';
 
-import { navBarVariants } from '@/components/navbar/Animations';
-import Navbar from '@/components/navbar/Navbar';
-import NavbarButton from '@/components/navbar/NavbarButton';
+import Navbar from '@/components/navbar';
+import { navBarVariants } from '@/components/navbar/animations';
+import NavbarButton from '@/components/navbar/navbar-button';
 import { MotionDiv } from '@/components/ui/MotionDiv';
 
 const Header = () => {

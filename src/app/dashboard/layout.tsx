@@ -1,4 +1,4 @@
-import Header from '@/components/navbar/Header';
+import Header from '@/components/navbar/header';
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (

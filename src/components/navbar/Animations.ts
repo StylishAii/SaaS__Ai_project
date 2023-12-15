@@ -1,6 +1,6 @@
 import { Variants } from 'framer-motion';
 
-const navBarVariants = (isWidth: boolean, isHeight: boolean) => ({
+const navBarVariants = (isWidth: boolean, isHeight: boolean): Variants => ({
   open: {
     width: isWidth ? '100%' : 450,
     height: isHeight || isWidth ? '100%' : 650,

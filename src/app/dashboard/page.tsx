@@ -1,7 +1,8 @@
 import { Lato } from 'next/font/google';
 
 import { cn } from '@/lib/utils';
-import Services from './components/Services';
+
+import Services from '@/components/services';
 
 const lato = Lato({ style: 'normal', weight: '700', subsets: ['latin'] });
 
