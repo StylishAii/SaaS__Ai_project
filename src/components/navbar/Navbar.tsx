@@ -3,6 +3,7 @@
 import { BotIcon } from 'lucide-react';
 import { Roboto } from 'next/font/google';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import {
   navBarEntryFooterVariants,
@@ -15,13 +16,17 @@ import { cn } from '@/lib/utils';
 const roboto = Roboto({ style: 'normal', weight: '700', subsets: ['latin'] });
 
 const Navbar = () => {
+  const pathname = usePathname();
+
+  console.log(pathname);
+
   return (
     <nav className='box-border flex h-full flex-col justify-between px-10 pt-20'>
       <div
-        className='flex flex-col gap-y-6 overflow-y-scroll mb-20 no-scrollbar'
+        className='flex flex-col gap-y-1 overflow-y-scroll mb-20 no-scrollbar'
         style={{ scrollbarWidth: 'none' }}
       >
-        {links.map((link, index) => (
+        {links.map(({ title, href, icon: Icon }, index) => (
           <div className='perspective-origin-bottom perspective-1' key={index}>
             <MotionDiv
               custom={index}
@@ -30,15 +35,21 @@ const Navbar = () => {
               animate={'enter'}
               exit={'exit'}
             >
-              <div className='flex flex-row gap-x-4 items-center'>
-                <link.icon className='text-teal-500' />
-                <Link
-                  className='text-xl sm-height:md:text-2xl text-white'
-                  href={link.href}
+              <Link
+                className={`flex flex-row items-center rounded-lg ${
+                  pathname === href ? 'bg-white/10' : ''
+                } hover:bg-white/10 py-2`}
+                href={href}
+              >
+                <Icon className='text-teal-500 mx-4' />
+                <p
+                  className={`text-xl sm-height:md:text-2xl ${
+                    pathname === href ? 'text-white' : 'text-gray-400'
+                  }`}
                 >
-                  {link.title}
-                </Link>
-              </div>
+                  {title}
+                </p>
+              </Link>
             </MotionDiv>
           </div>
         ))}
