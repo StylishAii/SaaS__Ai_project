@@ -3,7 +3,8 @@
 import { BotIcon } from 'lucide-react';
 import { Lato } from 'next/font/google';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { Dispatch, MouseEvent, SetStateAction } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -16,8 +17,20 @@ import { MotionDiv } from '@/components/ui/MotionDiv';
 
 const lato = Lato({ style: 'normal', weight: '700', subsets: ['latin'] });
 
-const Navbar = () => {
+interface NavbarProps {
+  setIsActive: Dispatch<SetStateAction<boolean>>;
+}
+
+const Navbar = ({ setIsActive }: NavbarProps) => {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleClick = (e: MouseEvent, href: string) => {
+    e.preventDefault();
+    router.prefetch(href);
+    setIsActive(false);
+    setTimeout(() => router.push(href), 800);
+  };
 
   return (
     <nav className='box-border flex h-full flex-col justify-between px-10 pt-20'>
@@ -39,6 +52,7 @@ const Navbar = () => {
                   pathname === href ? 'bg-white/10' : ''
                 } hover:bg-white/10 py-2`}
                 href={href}
+                onClick={e => handleClick(e, href)}
               >
                 <Icon className='text-teal-500 mx-4' />
                 <p

@@ -1,6 +1,6 @@
 import Header from '@/components/navbar/header';
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+const RoutesLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className='relative h-full bg-secondary'>
       <Header />
@@ -9,4 +9,4 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default DashboardLayout;
+export default RoutesLayout;

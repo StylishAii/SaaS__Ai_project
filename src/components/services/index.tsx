@@ -33,24 +33,22 @@ const Services = () => {
           >
             <Link href={href}>
               <Card
-                className='flex flex-row items-center p-4 gap-x-4 bg-card group
-              cursor-pointer hover:shadow-md transition duration-300 hover:bg-muted'
+                className='flex flex-row items-center p-4 gap-x-4 bg-card
+                cursor-pointer hover:shadow-md transition duration-1000 hover:bg-muted'
               >
                 <div
                   className={cn(
                     'h-10 w-10 bg-teal-500/20 flex items-center justify-center \
-                    rounded-md group-hover:opacity-75',
+                    rounded-md',
                     bgColor,
                   )}
                 >
-                  <Icon
-                    className={`${textColor} group-hover:text-opacity-75`}
-                  />
+                  <Icon className={`${textColor}`} />
                 </div>
                 <CardTitle>
-                  <h3 className='text-lg group-hover:text-black/75'>{title}</h3>
+                  <h3 className='text-lg'>{title}</h3>
                 </CardTitle>
-                <div className='ml-auto group-hover:text-black/75'>
+                <div className='ml-auto'>
                   <ArrowRight />
                 </div>
               </Card>
