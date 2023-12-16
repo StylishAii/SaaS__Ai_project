@@ -43,7 +43,7 @@ const Header = () => {
         </MotionDiv>
         <NavbarButton isActive={isActive} setIsActive={setIsActive} />
       </div>
-      <div className='absolute top-4 right-4 md:top-8 md:right-8'>
+      <div className='absolute top-4 right-4 md:top-8 md:right-8 pointer-events-auto'>
         <UserButton afterSignOutUrl={'/'} />
       </div>
     </div>
