@@ -68,8 +68,7 @@ const Navbar = ({ setIsActive }: NavbarProps) => {
         ))}
       </div>
       <div
-        className='absolute bottom-0 -translate-y-1/2 left-1/2 -translate-x-1/2 
-        mb-2'
+        className='absolute bottom-16 md:bottom-4 -translate-y-1/2 left-1/2 -translate-x-1/2'
       >
         <MotionDiv
           custom={links.length}

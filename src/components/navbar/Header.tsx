@@ -21,11 +21,11 @@ const Header = () => {
       <div
         className={`${
           isActive ? 'bg-background/50 pointer-events-auto' : 'bg-transparent'
-        } relative h-full w-full blur-xl transition duration-700 z-30`}
+        } relative h-full w-full blur-xl transition duration-700`}
         onClick={() => setIsActive(false)}
       />
       <div
-        className='absolute top-4 left-4 md:top-8 md:left-8 z-50'
+        className='absolute top-4 left-4 md:top-8 md:left-8'
         style={{
           height: `calc(100vh - ${isMediumWidth ? '0px' : '32px'})`,
           width: '100vw',

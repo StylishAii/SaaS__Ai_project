@@ -1,6 +1,6 @@
 import { Lato } from 'next/font/google';
 
-import { cn } from '@/lib/utils';
+import { cn, paddingX } from '@/lib/utils';
 
 import Services from '@/components/services';
 
@@ -22,7 +22,7 @@ const DashboardPage = () => {
           Empowering Your Software Stack with Intelligent Solutions
         </p>
       </div>
-      <div className='mt-8 max-w-7xl mx-auto px-4 md:px-12'>
+      <div className={cn('mt-8', paddingX)}>
         <Services />
       </div>
     </div>
