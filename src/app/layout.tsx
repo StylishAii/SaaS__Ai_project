@@ -1,6 +1,7 @@
 import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { Toaster } from 'sonner';
 
 import { cn } from '@/lib/utils';
 import './globals.css';
@@ -20,7 +21,10 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang='en'>
-        <body className={cn(inter.className, 'bg-secondary')}>{children}</body>
+        <body className={cn(inter.className, 'bg-secondary')}>
+          <Toaster />
+          {children}
+        </body>
       </html>
     </ClerkProvider>
   );

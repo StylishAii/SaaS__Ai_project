@@ -23,7 +23,7 @@ export const POST = async (req: Request) => {
       messages,
     });
 
-    return NextResponse.json(response.choices[0].message);
+    return NextResponse.json(response.choices[0].message, { status: 200 });
   } catch (err) {
     console.log('CONVERSATION_ERROR:', err);
     return new NextResponse('Internal Error', { status: 500 });

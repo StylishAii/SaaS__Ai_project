@@ -11,8 +11,8 @@ interface ConversationContentProps {
 const ConversationContent = ({ messages }: ConversationContentProps) => {
   return (
     <div
-      className='mx-auto flex h-full w-full max-w-7xl flex-col justify-end 
-      gap-y-4 px-4 md:px-6 min-h-[100px]'
+      className='flex h-full min-h-[100px] w-full flex-col justify-end gap-y-4 
+      px-4 md:px-6'
     >
       {messages.length === 0 ? (
         <Empty label='How can I help you today?' />

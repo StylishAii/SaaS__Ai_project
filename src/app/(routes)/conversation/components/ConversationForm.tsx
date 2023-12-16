@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
 import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import * as z from 'zod';
 
 import { Button } from '@/components/ui/button';
@@ -32,10 +33,17 @@ const ConversationForm = ({ messages, setMessages }: ConversationFormProps) => {
     },
   });
 
+  // Loading State
   const isLoading = conversationForm.formState.isSubmitting;
 
   const onSubmit = async (values: ConversationFormValues) => {
+    const toastId = toast('Conversation', { position: 'top-right' });
+
     try {
+      toast.loading('ChatXYZ is thinking...', {
+        id: toastId,
+      });
+
       const userMessage: ChatCompletionMessageParam = {
         role: 'user',
         content: values.prompt,
@@ -47,10 +55,18 @@ const ConversationForm = ({ messages, setMessages }: ConversationFormProps) => {
         messages: newMessages,
       });
 
-      setMessages(current => [...current, userMessage, response.data]);
-      conversationForm.reset();
+      if (response.status === 200) {
+        toast.dismiss(toastId);
+        setMessages(current => [...current, userMessage, response.data]);
+        conversationForm.reset();
+      } else {
+        toast.error('Something went wrong.', {
+          id: toastId,
+        });
+      }
     } catch (err: any) {
       // TODO: Open Pro Modal
+      toast.error(err.message, { id: toastId });
       console.log(err);
     } finally {
       router.refresh();
