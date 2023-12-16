@@ -10,8 +10,8 @@ const navBarVariants = (isWidth: boolean, isHeight: boolean): Variants => ({
     transition: { duration: 0.75, ease: [0.76, 0, 0.24, 1] },
   },
   closed: {
-    width: 40,
-    height: 40,
+    width: 32,
+    height: 32,
     top: 0,
     left: 0,
     borderRadius: 8,

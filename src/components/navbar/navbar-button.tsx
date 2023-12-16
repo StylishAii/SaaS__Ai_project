@@ -25,10 +25,10 @@ const NavbarButton = ({ isActive, setIsActive }: NavbarButtonProps) => {
         transition={{ duration: 0.75, ease: [0.76, 0, 0.24, 1] }}
       >
         <div className='flex h-full w-full items-center justify-center'>
-          <MenuIcon />
+          <MenuIcon className='h-5 w-5 md:h-auto md:w-auto' />
         </div>
         <div className='flex h-full w-full items-center justify-center'>
-          <XIcon />
+          <XIcon className='h-5 w-5 md:h-auto md:w-auto' />
         </div>
       </MotionDiv>
     </Button>

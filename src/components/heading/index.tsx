@@ -14,17 +14,17 @@ interface HeadingProps {
 
 const Heading = ({ title, bgColor, textColor, icon: Icon }: HeadingProps) => {
   return (
-    <div className={'px-[20px] md:px-6'}>
+    <div className={'px-4 md:px-6'}>
       <div className='flex flex-row items-center gap-x-2 md:gap-x-4'>
         <div
           className={cn(
-            'relative flex h-8 w-8 items-center justify-center rounded-lg md:h-14 md:w-14',
+            'relative flex h-8 w-8 items-center justify-center rounded-lg md:h-10 md:w-10',
             bgColor,
           )}
         >
-          <Icon className={cn('h-4 w-4 md:h-8 md:w-8', textColor)} />
+          <Icon className={cn('h-4 w-4 md:h-6 md:w-6', textColor)} />
         </div>
-        <h1 className={'z-10 text-3xl font-bold text-primary md:text-4xl'}>
+        <h1 className={'z-10 text-2xl font-bold text-primary md:text-3xl'}>
           {title}
         </h1>
       </div>

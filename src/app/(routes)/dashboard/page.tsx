@@ -13,7 +13,7 @@ const DashboardPage = () => {
       <div className='flex flex-col gap-y-4'>
         <h2
           className={cn(
-            'text-center text-2xl font-bold text-secondary-foreground md:text-4xl',
+            'mt-12 text-center text-2xl font-bold text-secondary-foreground md:text-4xl',
             lato.className,
           )}
         >
