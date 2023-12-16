@@ -1,23 +1,20 @@
 import { Conversation as conversation } from '@/constants';
 
-import ConversationForm from '@/app/(routes)/conversation/components/ConversationForm';
 import Heading from '@/components/heading';
+import ConversationBody from './components/ConversationBody';
 
 const ConversationPage = () => {
   const { title, icon, bgColor, textColor } = conversation;
 
   return (
-    <div className='flex h-full flex-col justify-start'>
+    <div className='flex h-full flex-col'>
       <Heading
         title={title}
         icon={icon}
         bgColor={bgColor}
         textColor={textColor}
       />
-      <div className='mt-4'>Messages Content</div>
-      <div className='mt-auto'>
-        <ConversationForm />
-      </div>
+      <ConversationBody />
     </div>
   );
 };
