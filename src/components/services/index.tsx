@@ -33,13 +33,12 @@ const Services = () => {
           >
             <Link href={href}>
               <Card
-                className='flex flex-row items-center p-4 gap-x-4 bg-card
-                cursor-pointer hover:shadow-md transition duration-1000 hover:bg-muted'
+                className='flex cursor-pointer flex-row items-center gap-x-4 bg-card
+                p-4 transition duration-1000 hover:bg-muted hover:shadow-md'
               >
                 <div
                   className={cn(
-                    'h-10 w-10 bg-teal-500/20 flex items-center justify-center \
-                    rounded-md',
+                    'flex h-10 w-10 items-center justify-center rounded-md                     bg-teal-500/20',
                     bgColor,
                   )}
                 >

@@ -35,7 +35,7 @@ const Navbar = ({ setIsActive }: NavbarProps) => {
   return (
     <nav className='box-border flex h-full flex-col justify-between px-10 pt-20'>
       <div
-        className='flex flex-col gap-y-1 overflow-y-scroll mb-20 no-scrollbar'
+        className='no-scrollbar mb-20 flex flex-col gap-y-1 overflow-y-scroll'
         style={{ scrollbarWidth: 'none' }}
       >
         {links.map(({ title, href, icon: Icon }, index) => (
@@ -50,11 +50,11 @@ const Navbar = ({ setIsActive }: NavbarProps) => {
               <Link
                 className={`flex flex-row items-center rounded-lg ${
                   pathname === href ? 'bg-white/10' : ''
-                } hover:bg-white/10 py-2`}
+                } py-2 hover:bg-white/10`}
                 href={href}
                 onClick={e => handleClick(e, href)}
               >
-                <Icon className='text-teal-500 mx-4' />
+                <Icon className='mx-4 text-teal-500' />
                 <p
                   className={`text-xl sm-height:md:text-2xl ${
                     pathname === href ? 'text-white' : 'text-gray-400'
@@ -67,9 +67,7 @@ const Navbar = ({ setIsActive }: NavbarProps) => {
           </div>
         ))}
       </div>
-      <div
-        className='absolute bottom-16 md:bottom-4 -translate-y-1/2 left-1/2 -translate-x-1/2'
-      >
+      <div className='absolute bottom-16 left-1/2 -translate-x-1/2 -translate-y-1/2 md:bottom-4'>
         <MotionDiv
           custom={links.length}
           className='flex items-center justify-center gap-x-2 text-teal-600'
@@ -79,7 +77,7 @@ const Navbar = ({ setIsActive }: NavbarProps) => {
           exit={'exit'}
         >
           <BotIcon className='h-10 w-10' />
-          <h1 className={cn('text-3xl mt-1 cursor-default', lato.className)}>
+          <h1 className={cn('mt-1 cursor-default text-3xl', lato.className)}>
             ChatXYZ
           </h1>
         </MotionDiv>

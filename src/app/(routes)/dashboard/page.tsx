@@ -12,13 +12,13 @@ const DashboardPage = () => {
       <div className='flex flex-col gap-y-4'>
         <h2
           className={cn(
-            'text-2xl md:text-4xl font-bold text-center text-secondary-foreground',
+            'text-center text-2xl font-bold text-secondary-foreground md:text-4xl',
             lato.className,
           )}
         >
           Welcome to ChatXYZ
         </h2>
-        <p className='text-muted-foreground font-light text-sm md:text-lg text-center'>
+        <p className='text-center text-sm font-light text-muted-foreground md:text-lg'>
           Empowering Your Software Stack with Intelligent Solutions
         </p>
       </div>

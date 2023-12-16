@@ -7,15 +7,17 @@ const ConversationPage = () => {
   const { title, icon, bgColor, textColor } = conversation;
 
   return (
-    <div className='h-full flex flex-col justify-between'>
+    <div className='flex h-full flex-col justify-start'>
       <Heading
         title={title}
         icon={icon}
         bgColor={bgColor}
         textColor={textColor}
       />
-
-      <ConversationForm />
+      <div className='mt-4'>Messages Content</div>
+      <div className='mt-auto'>
+        <ConversationForm />
+      </div>
     </div>
   );
 };

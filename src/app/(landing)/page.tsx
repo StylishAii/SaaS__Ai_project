@@ -42,10 +42,10 @@ const LandingPage = () => {
             </Link>
           </div>
         </div>
-        <div className='md-height:hidden flex w-full flex-row gap-x-4 pb-6'>
+        <div className='flex w-full flex-row gap-x-4 pb-6 md-height:hidden'>
           <LandingFooter />
         </div>
-        <div className='md-height:flex absolute bottom-12 hidden w-full flex-row gap-x-4'>
+        <div className='absolute bottom-12 hidden w-full flex-row gap-x-4 md-height:flex'>
           <LandingFooter />
         </div>
       </div>

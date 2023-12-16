@@ -17,7 +17,7 @@ const Header = () => {
   const isSmallHeight = useMediaQuery('(max-height: 684px)');
 
   return (
-    <div className='fixed w-full h-full pointer-events-none'>
+    <div className='pointer-events-none fixed h-full w-full'>
       <div
         className={`${
           isActive ? 'pointer-events-auto bg-gray-100/75' : 'bg-transparent'
@@ -25,7 +25,7 @@ const Header = () => {
         onClick={() => setIsActive(false)}
       />
       <div
-        className='absolute top-4 left-4 md:top-8 md:left-8'
+        className='absolute left-4 top-4 md:left-6 md:top-6'
         style={{
           height: `calc(100vh - ${isMediumWidth ? '0px' : '32px'})`,
           width: '100vw',
@@ -35,7 +35,7 @@ const Header = () => {
           variants={navBarVariants(isMediumWidth, isSmallHeight)}
           initial='closed'
           animate={isActive ? 'open' : 'closed'}
-          className={`relative h-full w-full bg-primary pointer-events-auto`}
+          className={`pointer-events-auto relative h-full w-full bg-primary`}
         >
           <AnimatePresence>
             {isActive && <Navbar setIsActive={setIsActive} />}
@@ -43,7 +43,7 @@ const Header = () => {
         </MotionDiv>
         <NavbarButton isActive={isActive} setIsActive={setIsActive} />
       </div>
-      <div className='absolute top-4 right-4 md:top-8 md:right-8 pointer-events-auto'>
+      <div className='pointer-events-auto absolute right-4 top-4 md:right-6 md:top-6'>
         <UserButton afterSignOutUrl={'/'} />
       </div>
     </div>

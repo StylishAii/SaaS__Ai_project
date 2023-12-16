@@ -33,8 +33,8 @@ const ConversationForm = () => {
       <Form {...conversationForm}>
         <form
           onSubmit={conversationForm.handleSubmit(onSubmit)}
-          className='rounded-lg border w-full p-4 px-3 md:px-6
-          focus-within:shadow-sm grid grid-cols-12 gap-2 space-y-2 lg:space-y-0'
+          className='grid w-full grid-cols-12 gap-2 space-y-2 rounded-lg
+          border p-4 px-3 focus-within:shadow-sm md:px-6 lg:space-y-0'
         >
           <FormField
             control={conversationForm.control}
@@ -45,8 +45,8 @@ const ConversationForm = () => {
                   <Input
                     disabled={isLoading}
                     placeholder='How do I calculate the perimeter of a circle?'
-                    className='border-0 outline-none focus-visible:ring-0 
-                    focus-visible:ring-transparent px-2'
+                    className='border-0 px-2 outline-none 
+                    focus-visible:ring-0 focus-visible:ring-transparent'
                     {...field}
                   />
                 </FormControl>
@@ -54,7 +54,7 @@ const ConversationForm = () => {
             )}
           />
           <Button
-            className='col-span-12 lg:col-span-2 w-full'
+            className='col-span-12 w-full lg:col-span-2'
             disabled={isLoading}
           >
             Generate

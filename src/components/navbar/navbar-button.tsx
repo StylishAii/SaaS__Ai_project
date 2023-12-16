@@ -14,7 +14,7 @@ interface NavbarButtonProps {
 const NavbarButton = ({ isActive, setIsActive }: NavbarButtonProps) => {
   return (
     <Button
-      className={`pointer-events-auto absolute top-0 left-0 overflow-hidden`}
+      className={`pointer-events-auto absolute left-0 top-0 overflow-hidden`}
       variant={'default'}
       size={'icon'}
       onClick={() => setIsActive(!isActive)}
@@ -24,10 +24,10 @@ const NavbarButton = ({ isActive, setIsActive }: NavbarButtonProps) => {
         animate={{ top: isActive ? '-100%' : 0 }}
         transition={{ duration: 0.75, ease: [0.76, 0, 0.24, 1] }}
       >
-        <div className='flex h-full w-full justify-center items-center'>
+        <div className='flex h-full w-full items-center justify-center'>
           <MenuIcon />
         </div>
-        <div className='flex h-full w-full justify-center items-center'>
+        <div className='flex h-full w-full items-center justify-center'>
           <XIcon />
         </div>
       </MotionDiv>
