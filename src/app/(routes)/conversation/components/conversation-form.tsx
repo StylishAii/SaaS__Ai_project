@@ -42,7 +42,7 @@ const ConversationForm = ({ messages, setMessages }: ConversationFormProps) => {
     try {
       toast.loading('ChatXYZ is thinking...', {
         id: toastId,
-        duration: 15000,
+        duration: 30000,
         cancel: { label: 'Dismiss', onClick: () => toast.dismiss(toastId) },
       });
 

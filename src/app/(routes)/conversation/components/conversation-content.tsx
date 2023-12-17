@@ -11,10 +11,12 @@ interface ConversationContentProps {
 }
 
 const ConversationContent = ({ messages }: ConversationContentProps) => {
+  // TODO: Make Div Scrollable
   return (
     <div
       className='flex h-full min-h-[100px] w-full flex-col justify-end 
-      gap-y-4 px-4 md:px-6 overflow-y-auto'
+      gap-y-4 px-4 md:px-6'
+      style={{ overflowY: 'scroll' }}
     >
       {messages.length === 0 ? (
         <Empty label='How can I help you today?' />
