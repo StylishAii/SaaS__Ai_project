@@ -11,14 +11,17 @@ interface ConversationContentProps {
 }
 
 const ConversationContent = ({ messages }: ConversationContentProps) => {
-  // TODO: Push Div Down
   return (
-    <div className='flex h-full min-h-[100px] w-full px-4 md:px-6'>
-      <div className='h-full' />
+    <div
+      className={cn(
+        'flex max-h-full min-h-[100px] w-full justify-center px-4 md:px-6',
+        messages.length === 0 && 'h-full',
+      )}
+    >
       {messages.length === 0 ? (
         <Empty label='How can I help you today?' />
       ) : (
-        <div className='flex h-full w-full flex-col gap-y-4 overflow-y-auto'>
+        <div className='no-scrollbar flex h-full w-full flex-col gap-y-4 overflow-y-auto'>
           {messages.map((message, index) => (
             <div
               key={index}

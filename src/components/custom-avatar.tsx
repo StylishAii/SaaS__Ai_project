@@ -23,11 +23,10 @@ const CustomAvatar = ({ role }: CustomAvatarProps) => {
   }
 
   return (
-    <div
-      className='inline-flex h-8 w-8 items-center justify-center rounded-full 
-      bg-secondary'
-    >
-      <BotIcon />
+    <div className='relative'>
+      <div className='flex h-8 w-8 items-center justify-center bg-secondary rounded-full'>
+        <BotIcon className='h-6 w-6' />
+      </div>
     </div>
   );
 };
