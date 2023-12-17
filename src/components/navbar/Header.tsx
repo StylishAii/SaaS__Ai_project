@@ -9,7 +9,7 @@ import useMediaQuery from '@/hooks/useMediaQuery';
 import Navbar from '@/components/navbar';
 import { navBarVariants } from '@/components/navbar/animations';
 import NavbarButton from '@/components/navbar/navbar-button';
-import { MotionDiv } from '@/components/ui/MotionDiv';
+import { MotionDiv } from '@/components/ui/motion-div';
 
 const Header = () => {
   const [isActive, setIsActive] = useState<boolean>(false);

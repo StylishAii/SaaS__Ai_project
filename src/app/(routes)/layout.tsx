@@ -2,7 +2,7 @@ import Header from '@/components/navbar/header';
 
 const RoutesLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className='h-screen'>
+    <div className='relative h-screen'>
       <div className='relative z-30'>
         <Header />
       </div>

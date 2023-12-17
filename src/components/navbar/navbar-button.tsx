@@ -3,8 +3,8 @@
 import { MenuIcon, XIcon } from 'lucide-react';
 import { Dispatch, SetStateAction } from 'react';
 
-import { MotionDiv } from '@/components/ui/MotionDiv';
 import { Button } from '@/components/ui/button';
+import { MotionDiv } from '@/components/ui/motion-div';
 
 interface NavbarButtonProps {
   isActive: boolean;

@@ -3,8 +3,8 @@
 import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
 import { useState } from 'react';
 
-import ConversationContent from './ConversationContent';
-import ConversationForm from './ConversationForm';
+import ConversationContent from './conversation-content';
+import ConversationForm from './conversation-form';
 
 const ConversationBody = () => {
   const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);

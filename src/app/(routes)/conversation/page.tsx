@@ -1,7 +1,7 @@
 import { Conversation as conversation } from '@/constants';
 
 import Heading from '@/components/heading';
-import ConversationBody from './components/ConversationBody';
+import ConversationBody from './components/conversation-body';
 
 const ConversationPage = () => {
   const { title, icon, bgColor, textColor } = conversation;

@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
 import { serviceVariants } from '@/components/services/animation';
 import { ServicesLinks } from '@/constants';
 
-import { MotionDiv } from '@/components/ui/MotionDiv';
 import { Card, CardTitle } from '@/components/ui/card';
+import { MotionDiv } from '@/components/ui/motion-div';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 

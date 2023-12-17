@@ -4,7 +4,7 @@ import { AnimatePresence, Variants } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { TypeAnimation } from 'react-type-animation';
 
-import { MotionDiv } from '@/components/ui/MotionDiv';
+import { MotionDiv } from '@/components/ui/motion-div';
 
 import { LandingPrompts } from '@/constants';
 

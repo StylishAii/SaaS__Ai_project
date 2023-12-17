@@ -13,7 +13,7 @@ import {
   navBarEntryVariants,
 } from '@/components/navbar/animations';
 import { links } from '@/components/navbar/data';
-import { MotionDiv } from '@/components/ui/MotionDiv';
+import { MotionDiv } from '@/components/ui/motion-div';
 
 const lato = Lato({ style: 'normal', weight: '700', subsets: ['latin'] });
 
