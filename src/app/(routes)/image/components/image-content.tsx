@@ -8,11 +8,11 @@ import { cn } from '@/lib/utils';
 import Avatar from '@/components/custom-avatar';
 import Empty from '@/components/empty';
 
-interface CodeGenerationContentProps {
+interface ImageContentProps {
   messages: ChatCompletionMessageParam[];
 }
 
-const CodeGenerationContent = ({ messages }: CodeGenerationContentProps) => {
+const ImageContent = ({ messages }: ImageContentProps) => {
   const filteredMessages = messages.filter(
     message => message.role !== 'system',
   );
@@ -72,4 +72,4 @@ const CodeGenerationContent = ({ messages }: CodeGenerationContentProps) => {
   );
 };
 
-export default CodeGenerationContent;
+export default ImageContent;

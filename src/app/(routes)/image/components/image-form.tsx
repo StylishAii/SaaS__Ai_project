@@ -13,30 +13,30 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
-const codeFormSchema = z.object({
+const imageFormSchema = z.object({
   prompt: z.string().min(1, { message: 'Prompt is required.' }),
 });
 
-type CodeFormValues = z.infer<typeof codeFormSchema>;
+type ImageFormValues = z.infer<typeof imageFormSchema>;
 
-interface CodeFormProps {
+interface ImageFormProps {
   messages: ChatCompletionMessageParam[];
   setMessages: Dispatch<SetStateAction<ChatCompletionMessageParam[]>>;
 }
 
-const CodeForm = ({ messages, setMessages }: CodeFormProps) => {
+const ImageForm = ({ messages, setMessages }: ImageFormProps) => {
   const router = useRouter();
-  const codeForm = useForm<CodeFormValues>({
-    resolver: zodResolver(codeFormSchema),
+  const imageForm = useForm<ImageFormValues>({
+    resolver: zodResolver(imageFormSchema),
     defaultValues: {
       prompt: '',
     },
   });
 
   // Loading State
-  const isLoading = codeForm.formState.isSubmitting;
+  const isLoading = imageForm.formState.isSubmitting;
 
-  const onSubmit = async (values: CodeFormValues) => {
+  const onSubmit = async (values: ImageFormValues) => {
     const toastId = toast('Code', { position: 'top-right' });
 
     try {
@@ -60,7 +60,7 @@ const CodeForm = ({ messages, setMessages }: CodeFormProps) => {
       if (response.status === 200) {
         toast.dismiss(toastId);
         setMessages(current => [...current, userMessage, response.data]);
-        codeForm.reset();
+        imageForm.reset();
       } else {
         toast.error('Something went wrong.', {
           id: toastId,
@@ -77,14 +77,14 @@ const CodeForm = ({ messages, setMessages }: CodeFormProps) => {
 
   return (
     <div>
-      <Form {...codeForm}>
+      <Form {...imageForm}>
         <form
-          onSubmit={codeForm.handleSubmit(onSubmit)}
+          onSubmit={imageForm.handleSubmit(onSubmit)}
           className='grid w-full grid-cols-12 gap-2 space-y-2 rounded-lg
           border p-4 px-3 focus-within:shadow-sm md:px-6 lg:space-y-0'
         >
           <FormField
-            control={codeForm.control}
+            control={imageForm.control}
             name='prompt'
             render={({ field }) => (
               <FormItem className='col-span-12 lg:col-span-10'>
@@ -112,4 +112,4 @@ const CodeForm = ({ messages, setMessages }: CodeFormProps) => {
   );
 };
 
-export default CodeForm;
+export default ImageForm;

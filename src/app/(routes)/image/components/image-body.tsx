@@ -4,14 +4,14 @@ import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
 import { useState } from 'react';
 
 import { cn } from '@/lib/utils';
-import { codeGenerationSetting } from '../data';
+import { imageGenerationSetting } from '../data';
 
-import CodeGenerationContent from './code-content';
-import CodeGenerationForm from './code-form';
+import ImageContent from './image-content';
+import ImageForm from './image-form';
 
-const CodeGenerationBody = () => {
+const ImageGenerationBody = () => {
   const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([
-    codeGenerationSetting,
+    imageGenerationSetting,
   ]);
 
   return (
@@ -22,13 +22,13 @@ const CodeGenerationBody = () => {
           messages.length === 0 ? 'justify-start' : 'justify-end',
         )}
       >
-        <CodeGenerationContent messages={messages} />
+        <ImageContent messages={messages} />
         <div className={cn('w-full', messages.length === 0 && 'mt-auto')}>
-          <CodeGenerationForm messages={messages} setMessages={setMessages} />
+          <ImageForm messages={messages} setMessages={setMessages} />
         </div>
       </div>
     </div>
   );
 };
 
-export default CodeGenerationBody;
+export default ImageGenerationBody;
