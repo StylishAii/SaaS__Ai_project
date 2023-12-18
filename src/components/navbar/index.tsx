@@ -38,7 +38,7 @@ const Navbar = ({ setIsActive }: NavbarProps) => {
         className='no-scrollbar mb-20 flex flex-col gap-y-1 overflow-y-scroll'
         style={{ scrollbarWidth: 'none' }}
       >
-        {links.map(({ title, href, icon: Icon }, index) => (
+        {links.map(({ title, href, icon: Icon, textColor }, index) => (
           <div className='perspective-origin-bottom perspective-1' key={index}>
             <MotionDiv
               custom={index}
@@ -54,7 +54,7 @@ const Navbar = ({ setIsActive }: NavbarProps) => {
                 href={href}
                 onClick={e => handleClick(e, href)}
               >
-                <Icon className='mx-4 text-teal-500' />
+                <Icon className={cn('mx-4', textColor)} />
                 <p
                   className={`text-xl sm-height:md:text-2xl ${
                     pathname === href ? 'text-white' : 'text-gray-400'

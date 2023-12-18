@@ -9,11 +9,46 @@ import {
 } from 'lucide-react';
 
 export const links = [
-  { title: 'Dashboard', href: '/dashboard', icon: LayoutDashboardIcon },
-  { title: 'Conversation', href: '/conversation', icon: MessageSquareIcon },
-  { title: 'Image Generation', href: '/image', icon: ImageIcon },
-  { title: 'Video Generation', href: '/video', icon: VideoIcon },
-  { title: 'Music Generation', href: '/music', icon: MusicIcon },
-  { title: 'Code Generation', href: '/code', icon: CodeIcon },
-  { title: 'Settings', href: '/settings', icon: SettingsIcon },
+  {
+    title: 'Dashboard',
+    href: '/dashboard',
+    icon: LayoutDashboardIcon,
+    textColor: 'text-indigo-500',
+  },
+  {
+    title: 'Conversation',
+    href: '/conversation',
+    icon: MessageSquareIcon,
+    textColor: 'text-blue-500',
+  },
+  {
+    title: 'Image Generation',
+    href: '/image',
+    icon: ImageIcon,
+    textColor: 'text-green-500',
+  },
+  {
+    title: 'Video Generation',
+    href: '/video',
+    icon: VideoIcon,
+    textColor: 'text-yellow-500',
+  },
+  {
+    title: 'Music Generation',
+    href: '/music',
+    icon: MusicIcon,
+    textColor: 'text-red-500',
+  },
+  {
+    title: 'Code Generation',
+    href: '/code',
+    icon: CodeIcon,
+    textColor: 'text-purple-500',
+  },
+  {
+    title: 'Settings',
+    href: '/settings',
+    icon: SettingsIcon,
+    textColor: 'text-pink-500',
+  },
 ];
