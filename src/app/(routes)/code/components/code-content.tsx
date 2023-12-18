@@ -1,28 +1,34 @@
 'use client';
 
 import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
+import Markdown from 'react-markdown';
+
+import { cn } from '@/lib/utils';
 
 import Avatar from '@/components/custom-avatar';
 import Empty from '@/components/empty';
-import { cn } from '@/lib/utils';
 
 interface ConversationContentProps {
   messages: ChatCompletionMessageParam[];
 }
 
 const ConversationContent = ({ messages }: ConversationContentProps) => {
+  const filteredMessages = messages.filter(
+    message => message.role !== 'system',
+  );
+
   return (
     <div
       className={cn(
         'flex max-h-full min-h-[100px] w-full justify-center px-4 md:px-6',
-        messages.length === 0 && 'h-full',
+        filteredMessages.length === 0 && 'h-full',
       )}
     >
-      {messages.length === 0 ? (
+      {filteredMessages.length === 0 ? (
         <Empty label='How can I help you today?' />
       ) : (
         <div className='no-scrollbar flex h-full w-full flex-col gap-y-4 overflow-y-auto'>
-          {messages.map((message, index) => (
+          {filteredMessages.map((message, index) => (
             <div
               key={index}
               className={cn(
@@ -37,7 +43,27 @@ const ConversationContent = ({ messages }: ConversationContentProps) => {
               ) : (
                 <Avatar role={'bot'} />
               )}
-              <p className='text-sm'>{message.content || ''}</p>
+              <Markdown
+                components={{
+                  ul: ({ node, ...props }) => (
+                    <ul className='list-disc pl-4' {...props} />
+                  ),
+                  li: ({ node, ...props }) => (
+                    <li className='mb-1' {...props} />
+                  ),
+                  pre: ({ node, ...props }) => (
+                    <div className='my-2 w-full overflow-auto rounded-lg bg-black/10 p-2'>
+                      <pre {...props} />
+                    </div>
+                  ),
+                  code: ({ node, ...props }) => (
+                    <code className='rounded-lg bg-black/10 p-1' {...props} />
+                  ),
+                }}
+                className={'overflow-auto text-sm leading-7'}
+              >
+                {message.content as string}
+              </Markdown>
             </div>
           ))}
         </div>

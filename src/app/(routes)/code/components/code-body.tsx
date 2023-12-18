@@ -4,12 +4,15 @@ import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
 import { useState } from 'react';
 
 import { cn } from '@/lib/utils';
+import { codeAssistantSetting } from '../data';
 
-import ConversationContent from './conversation-content';
-import ConversationForm from './conversation-form';
+import ConversationContent from './code-content';
+import ConversationForm from './code-form';
 
 const ConversationBody = () => {
-  const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
+  const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([
+    codeAssistantSetting,
+  ]);
 
   return (
     <div className='mx-auto mt-4 h-full w-full max-w-6xl overflow-hidden'>
