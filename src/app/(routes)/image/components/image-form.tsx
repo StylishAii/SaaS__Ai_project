@@ -3,33 +3,47 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
 import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import * as z from 'zod';
+
+import {
+  ImageFormSchema,
+  ImageFormValues,
+  amountOptions,
+  resolutionOptions,
+} from '../data';
 
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-
-const imageFormSchema = z.object({
-  prompt: z.string().min(1, { message: 'Prompt is required.' }),
-});
-
-type ImageFormValues = z.infer<typeof imageFormSchema>;
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 interface ImageFormProps {
-  messages: ChatCompletionMessageParam[];
-  setMessages: Dispatch<SetStateAction<ChatCompletionMessageParam[]>>;
+  images: string[];
+  setImages: Dispatch<SetStateAction<string[]>>;
 }
 
-const ImageForm = ({ messages, setMessages }: ImageFormProps) => {
+const ImageForm = ({ images, setImages }: ImageFormProps) => {
   const router = useRouter();
   const imageForm = useForm<ImageFormValues>({
-    resolver: zodResolver(imageFormSchema),
+    resolver: zodResolver(ImageFormSchema),
     defaultValues: {
       prompt: '',
+      amount: '1',
+      resolution: '512x512',
     },
   });
 
@@ -37,29 +51,25 @@ const ImageForm = ({ messages, setMessages }: ImageFormProps) => {
   const isLoading = imageForm.formState.isSubmitting;
 
   const onSubmit = async (values: ImageFormValues) => {
-    const toastId = toast('Code', { position: 'top-right' });
+    const toastId = toast('Image', { position: 'top-right' });
 
     try {
-      toast.loading('ChatXYZ is thinking...', {
+      setImages([]);
+
+      toast.loading('ChatXYZ is drawing...', {
         id: toastId,
         duration: 30000,
         cancel: { label: 'Dismiss', onClick: () => toast.dismiss(toastId) },
       });
 
-      const userMessage: ChatCompletionMessageParam = {
-        role: 'user',
-        content: values.prompt,
-      };
+      const response = await axios.post('/api/image', values);
 
-      const newMessages = [...messages, userMessage];
+      const urls = response.data.map((image: { url: string }) => image.url);
 
-      const response = await axios.post('/api/code', {
-        messages: newMessages,
-      });
+      setImages(urls);
 
       if (response.status === 200) {
         toast.dismiss(toastId);
-        setMessages(current => [...current, userMessage, response.data]);
         imageForm.reset();
       } else {
         toast.error('Something went wrong.', {
@@ -80,28 +90,84 @@ const ImageForm = ({ messages, setMessages }: ImageFormProps) => {
       <Form {...imageForm}>
         <form
           onSubmit={imageForm.handleSubmit(onSubmit)}
-          className='grid w-full grid-cols-12 gap-2 space-y-2 rounded-lg
+          className='grid w-full grid-cols-6 gap-2 space-y-2 rounded-lg
           border p-4 px-3 focus-within:shadow-sm md:px-6 lg:space-y-0'
         >
           <FormField
             control={imageForm.control}
-            name='prompt'
+            name={'prompt'}
             render={({ field }) => (
-              <FormItem className='col-span-12 lg:col-span-10'>
+              <FormItem className='col-span-6 lg:col-span-3'>
                 <FormControl className='m-0 p-0'>
                   <Input
                     disabled={isLoading}
-                    placeholder='Create a React client component template.'
-                    className='border-0 px-2 outline-none 
-                    focus-visible:ring-0 focus-visible:ring-transparent'
+                    placeholder='Generate an image featuring a futuristic cityscape at night.'
+                    className='border-0 px-2 outline-none focus-visible:ring-0 
+                    focus-visible:ring-transparent'
                     {...field}
                   />
                 </FormControl>
               </FormItem>
             )}
           />
+          <FormField
+            control={imageForm.control}
+            name={'amount'}
+            render={({ field }) => (
+              <FormItem className='col-span-2 lg:col-span-1'>
+                <Select
+                  disabled={isLoading}
+                  onValueChange={field.onChange}
+                  value={field.value}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue defaultValue={field.value} />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {amountOptions.map((amount, index) => (
+                      <SelectItem key={index} value={amount.value}>
+                        {amount.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={imageForm.control}
+            name={'resolution'}
+            render={({ field }) => (
+              <FormItem className='col-span-2 lg:col-span-1'>
+                <Select
+                  disabled={isLoading}
+                  onValueChange={field.onChange}
+                  value={field.value}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue defaultValue={field.value} />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {resolutionOptions.map((resolution, index) => (
+                      <SelectItem key={index} value={resolution.value}>
+                        {resolution.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <Button
-            className='col-span-12 w-full lg:col-span-2'
+            className='col-span-2 w-full lg:col-span-1'
             disabled={isLoading}
           >
             Generate

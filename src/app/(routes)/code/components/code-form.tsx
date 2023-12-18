@@ -7,17 +7,12 @@ import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
 import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import * as z from 'zod';
+
+import { CodeFormSchema, CodeFormValues } from '../data';
 
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-
-const codeFormSchema = z.object({
-  prompt: z.string().min(1, { message: 'Prompt is required.' }),
-});
-
-type CodeFormValues = z.infer<typeof codeFormSchema>;
 
 interface CodeFormProps {
   messages: ChatCompletionMessageParam[];
@@ -27,7 +22,7 @@ interface CodeFormProps {
 const CodeForm = ({ messages, setMessages }: CodeFormProps) => {
   const router = useRouter();
   const codeForm = useForm<CodeFormValues>({
-    resolver: zodResolver(codeFormSchema),
+    resolver: zodResolver(CodeFormSchema),
     defaultValues: {
       prompt: '',
     },
@@ -40,7 +35,7 @@ const CodeForm = ({ messages, setMessages }: CodeFormProps) => {
     const toastId = toast('Code', { position: 'top-right' });
 
     try {
-      toast.loading('ChatXYZ is thinking...', {
+      toast.loading('Copying from Stack Overflow...', {
         id: toastId,
         duration: 30000,
         cancel: { label: 'Dismiss', onClick: () => toast.dismiss(toastId) },
@@ -80,14 +75,14 @@ const CodeForm = ({ messages, setMessages }: CodeFormProps) => {
       <Form {...codeForm}>
         <form
           onSubmit={codeForm.handleSubmit(onSubmit)}
-          className='grid w-full grid-cols-12 gap-2 space-y-2 rounded-lg
+          className='grid w-full grid-cols-6 gap-2 space-y-2 rounded-lg
           border p-4 px-3 focus-within:shadow-sm md:px-6 lg:space-y-0'
         >
           <FormField
             control={codeForm.control}
             name='prompt'
             render={({ field }) => (
-              <FormItem className='col-span-12 lg:col-span-10'>
+              <FormItem className='col-span-6 lg:col-span-5'>
                 <FormControl className='m-0 p-0'>
                   <Input
                     disabled={isLoading}
@@ -101,7 +96,7 @@ const CodeForm = ({ messages, setMessages }: CodeFormProps) => {
             )}
           />
           <Button
-            className='col-span-12 w-full lg:col-span-2'
+            className='col-span-6 w-full lg:col-span-1'
             disabled={isLoading}
           >
             Generate

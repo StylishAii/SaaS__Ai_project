@@ -7,17 +7,12 @@ import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
 import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import * as z from 'zod';
+
+import { ConversationFormSchema, ConversationFormValues } from '../data';
 
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-
-const conversationFormSchema = z.object({
-  prompt: z.string().min(1, { message: 'Prompt is required.' }),
-});
-
-type ConversationFormValues = z.infer<typeof conversationFormSchema>;
 
 interface ConversationFormProps {
   messages: ChatCompletionMessageParam[];
@@ -27,7 +22,7 @@ interface ConversationFormProps {
 const ConversationForm = ({ messages, setMessages }: ConversationFormProps) => {
   const router = useRouter();
   const conversationForm = useForm<ConversationFormValues>({
-    resolver: zodResolver(conversationFormSchema),
+    resolver: zodResolver(ConversationFormSchema),
     defaultValues: {
       prompt: '',
     },
@@ -80,14 +75,14 @@ const ConversationForm = ({ messages, setMessages }: ConversationFormProps) => {
       <Form {...conversationForm}>
         <form
           onSubmit={conversationForm.handleSubmit(onSubmit)}
-          className='grid w-full grid-cols-12 gap-2 space-y-2 rounded-lg
+          className='grid w-full grid-cols-6 gap-2 space-y-2 rounded-lg
           border p-4 px-3 focus-within:shadow-sm md:px-6 lg:space-y-0'
         >
           <FormField
             control={conversationForm.control}
             name='prompt'
             render={({ field }) => (
-              <FormItem className='col-span-12 lg:col-span-10'>
+              <FormItem className='col-span-6 lg:col-span-5'>
                 <FormControl className='m-0 p-0'>
                   <Input
                     disabled={isLoading}
@@ -101,7 +96,7 @@ const ConversationForm = ({ messages, setMessages }: ConversationFormProps) => {
             )}
           />
           <Button
-            className='col-span-12 w-full lg:col-span-2'
+            className='col-span-6 w-full lg:col-span-1'
             disabled={isLoading}
           >
             Generate

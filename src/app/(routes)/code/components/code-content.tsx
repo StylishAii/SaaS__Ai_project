@@ -25,7 +25,7 @@ const CodeGenerationContent = ({ messages }: CodeGenerationContentProps) => {
       )}
     >
       {filteredMessages.length === 0 ? (
-        <Empty label='How can I help you today?' />
+        <Empty label='Need help with anything?' />
       ) : (
         <div className='no-scrollbar flex h-full w-full flex-col gap-y-4 overflow-y-auto'>
           {filteredMessages.map((message, index) => (

@@ -37,7 +37,7 @@ const ConversationContent = ({ messages }: ConversationContentProps) => {
               ) : (
                 <Avatar role={'bot'} />
               )}
-              <p className='text-sm'>{message.content || ''}</p>
+              <p className='text-sm'>{message.content as string}</p>
             </div>
           ))}
         </div>
