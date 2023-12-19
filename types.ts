@@ -8,5 +8,6 @@ declare namespace NodeJS {
     NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL: string;
     OPENAI_API_KEY: string;
     REPLICATE_API_TOKEN: string;
+    DATABASE_URL: string;
   }
 }

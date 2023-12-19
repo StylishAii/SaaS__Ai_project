@@ -38,3 +38,6 @@ next-env.d.ts
 
 # postgres
 data/db/
+
+# drizzle
+drizzle/
