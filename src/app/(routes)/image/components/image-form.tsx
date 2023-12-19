@@ -26,11 +26,10 @@ import {
 } from '@/components/ui/select';
 
 interface ImageFormProps {
-  images: string[];
   setImages: Dispatch<SetStateAction<string[]>>;
 }
 
-const ImageForm = ({ images, setImages }: ImageFormProps) => {
+const ImageForm = ({ setImages }: ImageFormProps) => {
   const router = useRouter();
   const imageForm = useForm<ImageFormValues>({
     resolver: zodResolver(ImageFormSchema),

@@ -20,7 +20,7 @@ const ImageGenerationBody = () => {
       >
         <ImageContent images={images} />
         <div className={cn('w-full', images.length === 0 && 'mt-auto')}>
-          <ImageForm images={images} setImages={setImages} />
+          <ImageForm setImages={setImages} />
         </div>
       </div>
     </div>

@@ -21,11 +21,10 @@ import {
 } from '@/components/ui/select';
 
 interface MusicFormProps {
-  music: string | undefined;
   setMusic: Dispatch<SetStateAction<string | undefined>>;
 }
 
-const MusicForm = ({ music, setMusic }: MusicFormProps) => {
+const MusicForm = ({ setMusic }: MusicFormProps) => {
   const router = useRouter();
   const musicForm = useForm<MusicFormValues>({
     resolver: zodResolver(MusicFormSchema),

@@ -20,7 +20,7 @@ const MusicBody = () => {
       >
         <MusicContent music={music} />
         <div className={cn('w-full', !music && 'mt-auto')}>
-          <MusicForm music={music} setMusic={setMusic} />
+          <MusicForm setMusic={setMusic} />
         </div>
       </div>
     </div>
