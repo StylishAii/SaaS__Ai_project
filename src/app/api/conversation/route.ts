@@ -1,7 +1,12 @@
 import { auth } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
+import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
 
-import { openai } from '@/lib/openai';
+import { openai } from '@/lib/open-ai';
+
+interface ConversationRequest {
+  messages: ChatCompletionMessageParam[];
+}
 
 export const POST = async (req: Request) => {
   try {
@@ -16,7 +21,7 @@ export const POST = async (req: Request) => {
     }
 
     const body = await req.json();
-    const { messages } = body;
+    const { messages }: ConversationRequest = body;
 
     if (!messages) {
       return new NextResponse('Messages are required', { status: 400 });

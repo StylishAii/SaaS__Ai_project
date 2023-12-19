@@ -15,13 +15,7 @@ import {
 } from '../data';
 
 import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -134,7 +128,6 @@ const ImageForm = ({ images, setImages }: ImageFormProps) => {
                     ))}
                   </SelectContent>
                 </Select>
-                <FormMessage />
               </FormItem>
             )}
           />
@@ -162,7 +155,6 @@ const ImageForm = ({ images, setImages }: ImageFormProps) => {
                     ))}
                   </SelectContent>
                 </Select>
-                <FormMessage />
               </FormItem>
             )}
           />

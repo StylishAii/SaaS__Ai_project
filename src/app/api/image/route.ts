@@ -2,9 +2,9 @@ import { auth } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
 
 import { Amount, Resolution } from '@/app/(routes)/image/data';
-import { openai } from '@/lib/openai';
+import { openai } from '@/lib/open-ai';
 
-interface ImageBody {
+interface ImageRequest {
   prompt: string;
   amount?: Amount;
   resolution?: Resolution;
@@ -23,7 +23,7 @@ export const POST = async (req: Request) => {
     }
 
     const body = await req.json();
-    const { prompt, amount = '1', resolution = '512x512' }: ImageBody = body;
+    const { prompt, amount = '1', resolution = '512x512' }: ImageRequest = body;
 
     if (!prompt) {
       return new NextResponse('Prompt is required', { status: 400 });
