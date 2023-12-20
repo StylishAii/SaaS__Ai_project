@@ -12,17 +12,31 @@ export const POST = async (req: Request) => {
     case 'user.created': {
       const userId = event.data.id;
       const email = event.data.email_addresses[0].email_address;
-      const firstName = event.data.first_name;
-      const lastName = event.data.last_name;
+      const name = `${event.data.first_name} ${event.data.last_name}`;
 
       await db
         .insert(users)
         .values({
           userId,
           email,
-          firstName,
-          lastName,
+          name,
         })
+        .execute();
+
+      break;
+    }
+    case 'user.updated': {
+      const userId = event.data.id;
+      const email = event.data.email_addresses[0].email_address;
+      const name = `${event.data.first_name} ${event.data.last_name}`;
+
+      await db
+        .update(users)
+        .set({
+          email,
+          name,
+        })
+        .where(eq(users.userId, userId))
         .execute();
 
       break;

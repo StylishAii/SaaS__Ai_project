@@ -55,7 +55,6 @@ const MusicForm = ({ setMusic }: MusicFormProps) => {
       toast.dismiss(toastId);
       musicForm.reset();
     } catch (err: any) {
-      // TODO: Open Pro Modal
       toast.error(err.message, { id: toastId });
       console.log(err);
     } finally {

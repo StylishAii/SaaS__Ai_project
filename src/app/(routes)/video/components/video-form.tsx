@@ -47,7 +47,6 @@ const VideoForm = ({ setVideo }: VideoFormProps) => {
       toast.dismiss(toastId);
       videoForm.reset();
     } catch (err: any) {
-      // TODO: Open Pro Modal
       toast.error(err.message, { id: toastId });
       console.log(err);
     } finally {

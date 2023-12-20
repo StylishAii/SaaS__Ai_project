@@ -3,6 +3,7 @@ import {
   ImageIcon,
   MessageSquareIcon,
   MusicIcon,
+  SettingsIcon,
   VideoIcon,
 } from 'lucide-react';
 
@@ -33,38 +34,46 @@ const Conversation = {
   title: 'Conversation',
   href: '/conversation',
   icon: MessageSquareIcon,
-  bgColor: 'bg-blue-500/20',
-  textColor: 'text-blue-500',
+  bgColor: 'bg-orange-500/20',
+  textColor: 'text-orange-500',
 };
 
 const ImageGeneration = {
   title: 'Image Generation',
   href: '/image',
   icon: ImageIcon,
-  bgColor: 'bg-green-500/20',
-  textColor: 'text-green-500',
+  bgColor: 'bg-yellow-500/20',
+  textColor: 'text-yellow-500',
 };
 
 const VideoGeneration = {
   title: 'Video Generation',
   href: '/video',
   icon: VideoIcon,
-  bgColor: 'bg-yellow-500/20',
-  textColor: 'text-yellow-500',
+  bgColor: 'bg-green-500/20',
+  textColor: 'text-green-500',
 };
 
 const MusicGeneration = {
   title: 'Music Generation',
   href: '/music',
   icon: MusicIcon,
-  bgColor: 'bg-red-500/20',
-  textColor: 'text-red-500',
+  bgColor: 'bg-blue-500/20',
+  textColor: 'text-blue-500',
 };
 
 const CodeGeneration = {
   title: 'Code Generation',
   href: '/code',
   icon: CodeIcon,
+  bgColor: 'bg-indigo-500/20',
+  textColor: 'text-indigo-500',
+};
+
+const Settings = {
+  title: 'Settings',
+  href: '/settings',
+  icon: SettingsIcon,
   bgColor: 'bg-purple-500/20',
   textColor: 'text-purple-500',
 };
@@ -84,5 +93,6 @@ export {
   LandingPrompts,
   MusicGeneration,
   ServicesLinks,
+  Settings,
   VideoGeneration,
 };

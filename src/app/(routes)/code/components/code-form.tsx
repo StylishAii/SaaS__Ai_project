@@ -62,7 +62,6 @@ const CodeForm = ({ messages, setMessages }: CodeFormProps) => {
         });
       }
     } catch (err: any) {
-      // TODO: Open Pro Modal
       toast.error(err.message, { id: toastId });
       console.log(err);
     } finally {

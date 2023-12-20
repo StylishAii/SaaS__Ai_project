@@ -4,6 +4,14 @@ export const users = pgTable('users', {
   id: serial('id').primaryKey(),
   userId: text('user_id').notNull(),
   email: text('email'),
-  firstName: text('first_name'),
-  lastName: text('last_name'),
+  name: text('name'),
+  about: text('about'),
 });
+
+// export const conversation = pgTable('conversation', {
+//   id: serial('id').primaryKey(),
+//   userId: text('user_id').notNull(),
+//   prompt: text('prompt').notNull(),
+//   response: text('response').notNull(),
+//   createdAt: timestamp('created_at').defaultNow().notNull(),
+// });
