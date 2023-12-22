@@ -18,5 +18,7 @@ export const fetchUser = async () => {
 
   if (!user) redirect('/');
 
+  console.log({ about: user.about });
+
   return user;
 };

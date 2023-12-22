@@ -40,14 +40,11 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
   const isLoading = settingsForm.formState.isSubmitting;
 
   const onSubmit = async (values: SettingsFormValues) => {
-    // const toastId = toast('Settings', { position: 'top-right' });
-
     try {
       const response = await axios.post('/api/settings', values);
 
       if (response.status === 200) {
         toast.success('Settings updated!');
-        settingsForm.reset();
       } else {
         toast.error('Something went wrong.');
       }

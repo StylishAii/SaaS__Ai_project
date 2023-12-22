@@ -4,6 +4,8 @@ import { Settings as settings } from '@/constants';
 import Heading from '@/components/heading';
 import SettingsForm from './components/settings-form';
 
+export const revalidate = 0;
+
 const SettingsPage = async () => {
   const { title, icon, bgColor, textColor } = settings;
 
