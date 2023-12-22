@@ -57,57 +57,55 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
   };
 
   return (
-    <div>
-      <Form {...settingsForm}>
-        <form
-          onSubmit={settingsForm.handleSubmit(onSubmit)}
-          className='grid w-full grid-cols-6 gap-2 space-y-2 rounded-lg
+    <Form {...settingsForm}>
+      <form
+        onSubmit={settingsForm.handleSubmit(onSubmit)}
+        className='grid w-full grid-cols-6 gap-2 space-y-2 rounded-lg
           border p-4 px-3 focus-within:shadow-sm md:px-6 lg:space-y-0'
-        >
-          <FormField
-            control={settingsForm.control}
-            name='name'
-            render={({ field }) => (
-              <FormItem className='col-span-6 lg:col-span-5'>
-                <FormLabel>Name</FormLabel>
-                <FormControl className='m-0 p-0'>
-                  <Input
-                    disabled={isLoading}
-                    className='border-0 px-2 outline-none 
+      >
+        <FormField
+          control={settingsForm.control}
+          name='name'
+          render={({ field }) => (
+            <FormItem className='col-span-6 lg:col-span-5'>
+              <FormLabel>Name</FormLabel>
+              <FormControl className='m-0 p-0'>
+                <Input
+                  disabled={isLoading}
+                  className='border-0 px-2 outline-none 
                     focus-visible:ring-0 focus-visible:ring-transparent'
-                    {...field}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={settingsForm.control}
-            name='about'
-            render={({ field }) => (
-              <FormItem className='col-span-6 lg:col-span-5'>
-                <FormLabel>About</FormLabel>
-                <FormControl className='m-0 p-0'>
-                  <Textarea
-                    disabled={isLoading}
-                    className='border-0 px-2 outline-none focus-visible:ring-0 
+                  {...field}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={settingsForm.control}
+          name='about'
+          render={({ field }) => (
+            <FormItem className='col-span-6 lg:col-span-5'>
+              <FormLabel>About</FormLabel>
+              <FormControl className='m-0 p-0'>
+                <Textarea
+                  disabled={isLoading}
+                  className='border-0 px-2 outline-none focus-visible:ring-0 
                     focus-visible:ring-transparent'
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  What would you like to share to improve our responses?
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button className='col-span-6 w-full' disabled={isLoading}>
-            Save
-          </Button>
-        </form>
-      </Form>
-    </div>
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription>
+                What would you like to share to improve our responses?
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button className='col-span-6 w-full' disabled={isLoading}>
+          Save
+        </Button>
+      </form>
+    </Form>
   );
 };
 

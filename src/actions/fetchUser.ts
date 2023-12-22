@@ -2,10 +2,10 @@
 
 import { auth } from '@clerk/nextjs';
 import { eq } from 'drizzle-orm';
+import { redirect } from 'next/navigation';
 
 import { db } from '@/db';
 import { users } from '@/db/schema';
-import { redirect } from 'next/navigation';
 
 export const fetchUser = async () => {
   const { userId } = auth();
@@ -17,8 +17,6 @@ export const fetchUser = async () => {
   });
 
   if (!user) redirect('/');
-
-  console.log({ about: user.about });
 
   return user;
 };

@@ -23,7 +23,7 @@ const DashboardPage = () => {
           Empowering Your Software Stack with Intelligent Solutions
         </p>
       </div>
-      <div className={cn('mt-8', styles.paddingX)}>
+      <div className={cn('mt-8 pb-20', styles.paddingX)}>
         <Services />
       </div>
     </div>

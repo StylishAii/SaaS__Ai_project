@@ -1,12 +1,20 @@
+import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
+
+import { fetchUser } from '@/actions/fetchUser';
 import { Conversation as conversation } from '@/constants';
 
 import Heading from '@/components/heading';
 import ConversationBody from './components/conversation-body';
 
-const ConversationPage = () => {
+const ConversationPage = async () => {
   const { title, icon, bgColor, textColor } = conversation;
 
-  // TODO: on 2xl screens have navbar open as sidebar
+  const user = await fetchUser();
+
+  const userContext: ChatCompletionMessageParam = {
+    role: 'system',
+    content: user.about,
+  };
 
   return (
     <div className='flex h-full flex-col'>
@@ -16,7 +24,7 @@ const ConversationPage = () => {
         bgColor={bgColor}
         textColor={textColor}
       />
-      <ConversationBody />
+      <ConversationBody userContext={userContext} />
     </div>
   );
 };

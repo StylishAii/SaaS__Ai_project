@@ -8,8 +8,14 @@ import { cn } from '@/lib/utils';
 import ConversationContent from './conversation-content';
 import ConversationForm from './conversation-form';
 
-const ConversationBody = () => {
-  const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
+interface ConversationBodyProps {
+  userContext: ChatCompletionMessageParam;
+}
+
+const ConversationBody = ({ userContext }: ConversationBodyProps) => {
+  const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([
+    userContext,
+  ]);
 
   return (
     <div className='mx-auto mt-4 h-full w-full max-w-6xl overflow-hidden'>
