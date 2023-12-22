@@ -1,11 +1,12 @@
+import { fetchUser } from '@/actions/fetchUser';
 import { Settings as settings } from '@/constants';
 
 import Heading from '@/components/heading';
-import { fetchUser } from '../../../../actions/fetchUser';
 import SettingsForm from './components/settings-form';
 
 const SettingsPage = async () => {
   const { title, icon, bgColor, textColor } = settings;
+
   const user = await fetchUser();
 
   return (

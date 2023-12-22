@@ -23,7 +23,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
 interface SettingsFormProps {
-  user: User | undefined;
+  user: User;
 }
 
 const SettingsForm = ({ user }: SettingsFormProps) => {
@@ -31,8 +31,8 @@ const SettingsForm = ({ user }: SettingsFormProps) => {
   const settingsForm = useForm<SettingsFormValues>({
     resolver: zodResolver(SettingsFormSchema),
     defaultValues: {
-      name: '',
-      about: '',
+      name: user.name ?? '',
+      about: user.about ?? '',
     },
   });
 
