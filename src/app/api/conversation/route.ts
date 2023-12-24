@@ -1,11 +1,11 @@
 import { auth } from '@clerk/nextjs';
+import { eq } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
 import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
 
 import { db } from '@/db';
 import { prompt, users } from '@/db/schema';
 import { openai } from '@/lib/open-ai';
-import { and, eq } from 'drizzle-orm';
 
 interface ConversationRequest {
   messages: ChatCompletionMessageParam[];
@@ -42,41 +42,35 @@ export const POST = async (req: Request) => {
       messages,
     });
 
-    const responseChoice = response.choices[0].message;
+    messages.push(response.choices[0].message);
 
-    // Run database operations in the background
-    (async () => {
-      messages.push(responseChoice);
+    const user = await db.query.users.findFirst({
+      where: eq(users.userId, userId),
+    });
 
-      const user = await db.query.users.findFirst({
-        where: eq(users.userId, userId),
+    if (user) {
+      const existingPromptsLength = await db.query.prompt
+        .findMany({
+          where: eq(prompt.authorId, user.id),
+        })
+        .execute()
+        .then(prompts => prompts.length);
+
+      messages.forEach(async ({ role, content }, index) => {
+        index >= existingPromptsLength &&
+          (await db
+            .insert(prompt)
+            .values({
+              role,
+              content: content as string,
+              index,
+              authorId: user.id,
+            })
+            .execute());
       });
+    }
 
-      if (user) {
-        const promptsToAdd: PromptToAdd[] = messages.map(
-          ({ role, content }, index) => ({
-            index,
-            authorId: user.id,
-            role,
-            content: content as string,
-          }),
-        );
-
-        promptsToAdd.forEach(async ({ role, content, index, authorId }) => {
-          const existingPrompt = await db.query.prompt.findFirst({
-            where: and(eq(prompt.authorId, authorId), eq(prompt.index, index)),
-          });
-
-          if (!existingPrompt) {
-            db.insert(prompt)
-              .values({ role, content, index, authorId })
-              .execute();
-          }
-        });
-      }
-    })();
-
-    return NextResponse.json(responseChoice, { status: 200 });
+    return NextResponse.json(response.choices[0].message, { status: 200 });
   } catch (err) {
     console.log('CONVERSATION_ERROR:', err);
     return new NextResponse('Internal Error', { status: 500 });
