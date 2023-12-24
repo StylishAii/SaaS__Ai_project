@@ -31,3 +31,7 @@ export const prompt = pgTable('prompt', {
   content: text('response').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
+
+export const promptRelations = relations(prompt, ({ one }) => ({
+  author: one(users, { fields: [prompt.authorId], references: [users.id] }),
+}));
