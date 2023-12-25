@@ -7,7 +7,7 @@ const navBarVariants = (isWidth: boolean, isHeight: boolean): Variants => ({
     top: -16,
     left: -16,
     borderRadius: isWidth ? 0 : 30,
-    transition: { duration: 0.75, ease: [0.76, 0, 0.24, 1] },
+    transition: { duration: 0.70, ease: [0.76, 0, 0.24, 1] },
   },
   closed: {
     width: 32,
@@ -15,7 +15,7 @@ const navBarVariants = (isWidth: boolean, isHeight: boolean): Variants => ({
     top: 0,
     left: 0,
     borderRadius: 8,
-    transition: { delay: 0.35, duration: 0.75, ease: [0.76, 0, 0.24, 1] },
+    transition: { delay: 0.15, duration: 0.55, ease: [0.76, 0, 0.24, 1] },
   },
 });
 
@@ -40,7 +40,7 @@ const navBarEntryVariants: Variants = {
   }),
   exit: {
     opacity: 0,
-    transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
+    transition: { duration: 0.35, ease: [0.76, 0, 0.24, 1] },
   },
 };
 
@@ -60,7 +60,7 @@ const navBarEntryFooterVariants: Variants = {
   }),
   exit: {
     opacity: 0,
-    transition: { duration: 0.75, ease: [0.76, 0, 0.24, 1] },
+    transition: { duration: 0.35, ease: [0.76, 0, 0.24, 1] },
   },
 };
 

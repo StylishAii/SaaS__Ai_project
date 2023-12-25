@@ -20,7 +20,7 @@ const Header = () => {
     <div className='pointer-events-none fixed h-full w-full'>
       <div
         className={`${
-          isActive ? 'pointer-events-auto bg-gray-100/75' : 'bg-transparent'
+          isActive ? 'pointer-events-auto bg-black/80' : 'bg-transparent'
         } relative h-full w-full transition duration-700`}
         onClick={() => setIsActive(false)}
       />
