@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
+import { useConversation } from '@/hooks/useConversation';
+
 import { Button } from '@/components/ui/button';
 
 interface ResetFormProps {
@@ -12,6 +14,7 @@ interface ResetFormProps {
 
 const ResetForm = ({ title }: ResetFormProps) => {
   const router = useRouter();
+  const { resetConversation } = useConversation();
 
   const onReset = async () => {
     try {
@@ -19,6 +22,7 @@ const ResetForm = ({ title }: ResetFormProps) => {
 
       if (response.status === 200) {
         toast.success('Conversation reset.');
+        resetConversation();
       } else {
         toast.error('Something went wrong.');
       }

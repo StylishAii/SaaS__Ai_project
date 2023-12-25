@@ -1,18 +1,17 @@
 'use client';
 
-import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
 import { Fragment } from 'react';
+
+import { useConversation } from '@/hooks/useConversation';
+import { cn } from '@/lib/utils';
 
 import Avatar from '@/components/custom-avatar';
 import Empty from '@/components/empty';
-import { cn } from '@/lib/utils';
 
-interface ConversationContentProps {
-  messages: ChatCompletionMessageParam[];
-}
+const ConversationContent = () => {
+  const { conversation } = useConversation();
 
-const ConversationContent = ({ messages }: ConversationContentProps) => {
-  const filteredMessages = messages.filter(
+  const filteredMessages = conversation.filter(
     message => message.role !== 'system',
   );
 

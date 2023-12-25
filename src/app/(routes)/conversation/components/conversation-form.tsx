@@ -4,23 +4,19 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
-import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
+import { useConversation } from '@/hooks/useConversation';
 import { ConversationFormSchema, ConversationFormValues } from '../data';
 
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
-interface ConversationFormProps {
-  messages: ChatCompletionMessageParam[];
-  setMessages: Dispatch<SetStateAction<ChatCompletionMessageParam[]>>;
-}
-
-const ConversationForm = ({ messages, setMessages }: ConversationFormProps) => {
+const ConversationForm = () => {
   const router = useRouter();
+  const { conversation, setConversation } = useConversation();
   const conversationForm = useForm<ConversationFormValues>({
     resolver: zodResolver(ConversationFormSchema),
     defaultValues: {
@@ -46,7 +42,7 @@ const ConversationForm = ({ messages, setMessages }: ConversationFormProps) => {
         content: values.prompt,
       };
 
-      const newMessages = [...messages, userMessage];
+      const newMessages = [...conversation, userMessage];
 
       const response = await axios.post('/api/conversation', {
         messages: newMessages,
@@ -54,7 +50,7 @@ const ConversationForm = ({ messages, setMessages }: ConversationFormProps) => {
 
       if (response.status === 200) {
         toast.dismiss(toastId);
-        setMessages(current => [...current, userMessage, response.data]);
+        setConversation([...newMessages, response.data]);
         conversationForm.reset();
       } else {
         toast.error('Something went wrong.', {

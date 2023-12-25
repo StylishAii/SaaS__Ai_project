@@ -1,10 +1,11 @@
 'use client';
 
 import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
-import { useState } from 'react';
+import { useEffect } from 'react';
 
 import { cn } from '@/lib/utils';
 
+import { useConversation } from '@/hooks/useConversation';
 import ConversationContent from './conversation-content';
 import ConversationForm from './conversation-form';
 
@@ -13,21 +14,23 @@ interface ConversationBodyProps {
 }
 
 const ConversationBody = ({ userContext }: ConversationBodyProps) => {
-  const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([
-    ...userContext,
-  ]);
+  const { conversation, setConversation } = useConversation();
+
+  useEffect(() => {
+    setConversation(userContext);
+  }, [userContext, setConversation]);
 
   return (
     <div className='mx-auto mt-4 h-full w-full max-w-6xl overflow-hidden'>
       <div
         className={cn(
           'flex h-full flex-col gap-y-4',
-          messages.length === 0 ? 'justify-start' : 'justify-end',
+          conversation.length === 0 ? 'justify-start' : 'justify-end',
         )}
       >
-        <ConversationContent messages={messages} />
-        <div className={cn('w-full', messages.length === 0 && 'mt-auto')}>
-          <ConversationForm messages={messages} setMessages={setMessages} />
+        <ConversationContent />
+        <div className={cn('w-full', conversation.length === 0 && 'mt-auto')}>
+          <ConversationForm />
         </div>
       </div>
     </div>
