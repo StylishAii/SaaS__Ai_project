@@ -50,7 +50,6 @@ export const POST = async (req: Request) => {
         .findMany({
           where: eq(prompt.authorId, user.id),
         })
-        .execute()
         .then(prompts => prompts.length)
         .catch(() => -1);
 

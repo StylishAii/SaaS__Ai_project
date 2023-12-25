@@ -2,11 +2,11 @@ import { LucideIcon } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
-import { Separator } from '../ui/separator';
+import ResetForm from '@/components/reset-form';
+import { Separator } from '@/components/ui/separator';
 
 interface HeadingProps {
   title: string;
-
   bgColor: string;
   textColor: string;
   icon: LucideIcon;
@@ -14,8 +14,8 @@ interface HeadingProps {
 
 const Heading = ({ title, bgColor, textColor, icon: Icon }: HeadingProps) => {
   return (
-    <div className={'px-4 md:px-6'}>
-      <div className='flex flex-row items-center gap-x-2 md:gap-x-4'>
+    <div className='w-full px-4 md:px-6'>
+      <div className='flex w-full flex-row items-center gap-x-2 md:gap-x-4'>
         <div
           className={cn(
             'relative flex h-8 w-8 items-center justify-center rounded-lg md:h-10 md:w-10',
@@ -27,6 +27,7 @@ const Heading = ({ title, bgColor, textColor, icon: Icon }: HeadingProps) => {
         <h1 className={'z-10 text-2xl font-bold text-primary md:text-3xl'}>
           {title}
         </h1>
+        <ResetForm title={title} />
       </div>
       <Separator className='mt-4 h-[2px]' />
     </div>

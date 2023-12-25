@@ -9,12 +9,12 @@ import ConversationContent from './conversation-content';
 import ConversationForm from './conversation-form';
 
 interface ConversationBodyProps {
-  userContext: ChatCompletionMessageParam;
+  userContext: ChatCompletionMessageParam[];
 }
 
 const ConversationBody = ({ userContext }: ConversationBodyProps) => {
   const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([
-    userContext,
+    ...userContext,
   ]);
 
   return (

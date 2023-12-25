@@ -1,5 +1,4 @@
-import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
-
+import { fetchPrompts } from '@/actions/fetchPrompts';
 import { fetchUser } from '@/actions/fetchUser';
 import { Conversation as conversation } from '@/constants';
 
@@ -11,10 +10,17 @@ const ConversationPage = async () => {
 
   const user = await fetchUser();
 
-  const userContext: ChatCompletionMessageParam = {
-    role: 'system',
-    content: user.about,
-  };
+  const prompts = await fetchPrompts(user);
+
+  const userContext =
+    prompts.length === 0
+      ? [
+          {
+            role: 'system' as const,
+            content: user.about,
+          },
+        ]
+      : prompts;
 
   return (
     <div className='flex h-full flex-col'>
