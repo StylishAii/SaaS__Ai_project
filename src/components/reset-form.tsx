@@ -1,6 +1,8 @@
 'use client';
 
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 
@@ -9,9 +11,23 @@ interface ResetFormProps {
 }
 
 const ResetForm = ({ title }: ResetFormProps) => {
+  const router = useRouter();
+
   const onReset = async () => {
-    const response = await axios.post('/api/conversation', {});
-    console.log('reset');
+    try {
+      const response = await axios.delete('/api/conversation');
+
+      if (response.status === 200) {
+        toast.success('Conversation reset.');
+      } else {
+        toast.error('Something went wrong.');
+      }
+    } catch (err: any) {
+      toast.error(err.message);
+      console.log(err);
+    } finally {
+      router.refresh();
+    }
   };
 
   return (
