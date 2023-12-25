@@ -2,7 +2,7 @@ import { LucideIcon } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
-import ResetForm from '@/components/reset-form';
+import ResetFormButton from '@/components/reset-form-button';
 import { Separator } from '@/components/ui/separator';
 
 interface HeadingProps {
@@ -27,7 +27,7 @@ const Heading = ({ title, bgColor, textColor, icon: Icon }: HeadingProps) => {
         <h1 className={'z-10 text-2xl font-bold text-primary md:text-3xl'}>
           {title}
         </h1>
-        <ResetForm title={title} />
+        <ResetFormButton title={title} />
       </div>
       <Separator className='mt-4 h-[2px]' />
     </div>
