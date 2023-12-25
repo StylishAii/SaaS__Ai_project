@@ -11,13 +11,6 @@ interface ConversationRequest {
   messages: ChatCompletionMessageParam[];
 }
 
-interface PromptToAdd {
-  index: number;
-  authorId: number;
-  role: ChatCompletionMessageParam['role'];
-  content: string;
-}
-
 export const POST = async (req: Request) => {
   try {
     const { userId } = auth();
@@ -42,6 +35,10 @@ export const POST = async (req: Request) => {
       messages,
     });
 
+    if (!response.choices) {
+      return new NextResponse('No response from OpenAI', { status: 500 });
+    }
+
     messages.push(response.choices[0].message);
 
     const user = await db.query.users.findFirst({
@@ -54,17 +51,34 @@ export const POST = async (req: Request) => {
           where: eq(prompt.authorId, user.id),
         })
         .execute()
-        .then(prompts => prompts.length);
+        .then(prompts => prompts.length)
+        .catch(() => -1);
+
+      if (existingPromptsLength === -1) {
+        messages.forEach(async ({ role, content }, index) => {
+          await db
+            .insert(prompt)
+            .values({
+              authorId: user.id,
+              index,
+              role,
+              content: content as string,
+            })
+            .execute();
+        });
+
+        return NextResponse.json(response.choices[0].message, { status: 200 });
+      }
 
       messages.forEach(async ({ role, content }, index) => {
         index >= existingPromptsLength &&
           (await db
             .insert(prompt)
             .values({
+              authorId: user.id,
+              index,
               role,
               content: content as string,
-              index,
-              authorId: user.id,
             })
             .execute());
       });

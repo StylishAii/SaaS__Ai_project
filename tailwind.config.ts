@@ -47,6 +47,9 @@ module.exports = {
         'sm-height': { raw: '(min-height: 640px)' },
         'md-height': { raw: '(min-height: 800px)' },
       },
+      height: {
+        dynamic: '100dvh',
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

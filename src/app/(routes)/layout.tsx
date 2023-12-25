@@ -6,7 +6,9 @@ const RoutesLayout = ({ children }: { children: React.ReactNode }) => {
       <div className='relative z-30'>
         <Header />
       </div>
-      <main className='h-screen w-full pt-[64px] md:pt-[88px]'>{children}</main>
+      <main className='h-dynamic w-full pt-[64px] md:pt-[88px]'>
+        {children}
+      </main>
     </>
   );
 };
