@@ -32,15 +32,7 @@ const CodeForm = () => {
   const isLoading = codeForm.formState.isSubmitting;
 
   const onSubmit = async (values: CodeFormValues) => {
-    const toastId = toast('Code', { position: 'top-right' });
-
     try {
-      toast.loading('Copying from Stack Overflow...', {
-        id: toastId,
-        duration: 30000,
-        cancel: { label: 'Dismiss', onClick: () => toast.dismiss(toastId) },
-      });
-
       const userMessage: ChatCompletionMessageParam = {
         role: 'user',
         content: values.prompt,
@@ -48,21 +40,25 @@ const CodeForm = () => {
 
       const newMessages = [...code, userMessage];
 
-      const response = await axios.post('/api/code', {
+      const responsePromise = axios.post('/api/code', {
         messages: newMessages,
       });
 
+      toast.promise(responsePromise, {
+        id: 'Code',
+        position: 'top-right',
+        loading: 'Copying from Stack Overflow...',
+        error: 'Something went wrong.',
+      });
+
+      const response = await responsePromise;
+
       if (response.status === 200) {
-        toast.dismiss(toastId);
         setCode([...newMessages, response.data]);
         codeForm.reset();
-      } else {
-        toast.error('Something went wrong.', {
-          id: toastId,
-        });
       }
     } catch (err: any) {
-      toast.error(err.message, { id: toastId });
+      toast.error(err.message);
       console.log(err);
     } finally {
       router.refresh();

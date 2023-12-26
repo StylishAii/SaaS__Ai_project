@@ -1,7 +1,7 @@
+import { UserButton } from '@clerk/nextjs';
 import { useEffect, useState } from 'react';
 
 import { Skeleton } from '@/components/ui/skeleton';
-import { UserButton } from '@clerk/nextjs';
 
 const ClerkButton = () => {
   const [isMounted, setIsMounted] = useState(false);

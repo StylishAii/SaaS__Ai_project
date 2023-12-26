@@ -5,7 +5,7 @@ const RoutesLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <>
-      <div className='relative z-30'>
+      <div className='relative z-10'>
         <Header />
       </div>
       <main className='h-dynamic w-full pt-[64px] md:pt-[72px]'>

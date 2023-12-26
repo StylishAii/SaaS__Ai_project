@@ -27,16 +27,16 @@ const ResetFormModal = () => {
         const response = await axios.delete(api);
 
         if (response.status === 200) {
-          toast.success(`${title} Reset`);
+          toast.success(`${title} Reset`, { position: 'top-right' });
           resetConversation();
         } else {
-          toast.error('Something went wrong.');
+          toast.error('Something went wrong.', { position: 'top-right' });
         }
       } else {
         throw new Error('No API provided.');
       }
     } catch (err: any) {
-      toast.error(err.message);
+      toast.error(err.message, { position: 'top-right' });
       console.log(err);
     } finally {
       setIsLoading(false);

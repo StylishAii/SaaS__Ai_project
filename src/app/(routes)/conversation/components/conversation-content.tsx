@@ -40,7 +40,9 @@ const ConversationContent = () => {
 
   useEffect(() => {
     if (isMounted) {
-      divRef.current.scrollTop = divRef.current.scrollHeight;
+      if (divRef.current) {
+        divRef.current.scrollTop = divRef.current.scrollHeight;
+      }
     }
   }, [isMounted]);
 

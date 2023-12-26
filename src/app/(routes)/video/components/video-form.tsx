@@ -33,24 +33,26 @@ const VideoForm = ({ setVideo }: VideoFormProps) => {
   const isLoading = videoForm.formState.isSubmitting;
 
   const onSubmit = async (values: VideoFormValues) => {
-    const toastId = toast('Video', { position: 'top-right' });
-
     try {
       setVideo(undefined);
 
-      toast.loading('Directing a movie...', {
-        id: toastId,
-        duration: 30000,
-        cancel: { label: 'Dismiss', onClick: () => toast.dismiss(toastId) },
+      const responsePromise = axios.post('/api/video', values);
+
+      toast.promise(responsePromise, {
+        id: 'Video',
+        position: 'top-right',
+        loading: 'Directing a movie...',
+        error: 'Something went wrong.',
       });
 
-      const response = await axios.post('/api/video', values);
+      const response = await responsePromise;
 
-      setVideo(response.data[0]);
-      toast.dismiss(toastId);
-      videoForm.reset();
+      if (response.status === 200) {
+        setVideo(response.data[0]);
+        videoForm.reset();
+      }
     } catch (err: any) {
-      toast.error(err.message, { id: toastId });
+      toast.error(err.message);
       console.log(err);
     } finally {
       router.refresh();
@@ -66,56 +68,54 @@ const VideoForm = ({ setVideo }: VideoFormProps) => {
   }
 
   return (
-    <div>
-      <Form {...videoForm}>
-        <form
-          onSubmit={videoForm.handleSubmit(onSubmit)}
-          className='grid w-full grid-cols-6 gap-2 rounded-lg
+    <Form {...videoForm}>
+      <form
+        onSubmit={videoForm.handleSubmit(onSubmit)}
+        className='grid w-full grid-cols-6 gap-2 rounded-lg
           border px-3 py-2 focus-within:shadow-sm md:px-4'
-        >
-          <FormField
-            control={videoForm.control}
-            name='prompt'
-            render={({ field }) => (
-              <FormItem className='col-span-6 md:col-span-5'>
-                <FormControl className='m-0 p-0'>
-                  <div className='relative flex w-full'>
-                    <Input
-                      disabled={isLoading}
-                      placeholder='Dog chasing its tail.'
-                      className='border-0 px-2 outline-none 
+      >
+        <FormField
+          control={videoForm.control}
+          name='prompt'
+          render={({ field }) => (
+            <FormItem className='col-span-6 md:col-span-5'>
+              <FormControl className='m-0 p-0'>
+                <div className='relative flex w-full'>
+                  <Input
+                    disabled={isLoading}
+                    placeholder='Dog chasing its tail.'
+                    className='border-0 px-2 outline-none 
                       focus-visible:ring-0 focus-visible:ring-transparent'
-                      {...field}
-                    />
-                    <TooltipWrapper tooltip={'Generate'}>
-                      <Button
-                        className='absolute right-1 top-1 flex md:right-0 md:top-0 
+                    {...field}
+                  />
+                  <TooltipWrapper tooltip={'Generate'}>
+                    <Button
+                      className='absolute right-1 top-1 flex md:right-0 md:top-0 
                         md:hidden'
-                        variant={'outline'}
-                        size={'icon'}
-                        disabled={isLoading}
-                        type='submit'
-                      >
-                        <ArrowUpIcon />
-                      </Button>
-                    </TooltipWrapper>
-                  </div>
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <Button
-            className='hidden md:block'
-            variant={'default'}
-            size={'default'}
-            disabled={isLoading}
-            type={'submit'}
-          >
-            Generate
-          </Button>
-        </form>
-      </Form>
-    </div>
+                      variant={'outline'}
+                      size={'icon'}
+                      disabled={isLoading}
+                      type='submit'
+                    >
+                      <ArrowUpIcon />
+                    </Button>
+                  </TooltipWrapper>
+                </div>
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <Button
+          className='hidden md:block'
+          variant={'default'}
+          size={'default'}
+          disabled={isLoading}
+          type={'submit'}
+        >
+          Generate
+        </Button>
+      </form>
+    </Form>
   );
 };
 
