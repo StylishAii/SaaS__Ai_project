@@ -20,10 +20,10 @@ const CodeGenerationBody = ({ initialPrompts }: CodeBodyProps) => {
   }, [initialPrompts, setCode]);
 
   return (
-    <div className='mx-auto mt-4 h-full w-full max-w-6xl overflow-hidden'>
+    <div className='mx-auto mt-2 h-full w-full max-w-6xl overflow-hidden'>
       <div
         className={cn(
-          'flex h-full flex-col gap-y-4',
+          'flex h-full flex-col gap-y-2',
           code.length === 0 ? 'justify-start' : 'justify-end',
         )}
       >

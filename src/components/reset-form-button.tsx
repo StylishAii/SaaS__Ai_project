@@ -12,7 +12,7 @@ const ResetFormButton = ({ title, api }: ResetFormButtonProps) => {
   const { onOpen } = useResetFormModal();
 
   return (
-    (title === 'Conversation' || 'Code') && (
+    (title === 'Conversation' || title === 'Code') && (
       <Button
         onClick={() => onOpen({ title, api })}
         className='ml-auto'

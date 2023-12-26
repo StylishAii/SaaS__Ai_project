@@ -21,7 +21,7 @@ const Heading = ({
   icon: Icon,
 }: HeadingProps) => {
   return (
-    <div className='w-full px-4 md:px-6'>
+    <div className='w-full px-3 md:px-4'>
       <div className='flex w-full flex-row items-center gap-x-2 md:gap-x-4'>
         <div
           className={cn(
@@ -36,7 +36,7 @@ const Heading = ({
         </h1>
         {api && <ResetFormButton title={title} api={api} />}
       </div>
-      <Separator className='mt-4 h-[2px]' />
+      <Separator className='mt-2 h-[2px]' />
     </div>
   );
 };

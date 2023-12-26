@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
+import { ArrowUpIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
 import { useForm } from 'react-hook-form';
@@ -10,6 +11,7 @@ import { toast } from 'sonner';
 import { useCode } from '@/hooks/useCode';
 import { CodeFormSchema, CodeFormValues } from '../data';
 
+import TooltipWrapper from '@/components/tooltip-wrapper';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -66,39 +68,54 @@ const CodeForm = () => {
   };
 
   return (
-    <div>
-      <Form {...codeForm}>
-        <form
-          onSubmit={codeForm.handleSubmit(onSubmit)}
-          className='grid w-full grid-cols-6 gap-2 space-y-2 rounded-lg
-          border p-4 px-3 focus-within:shadow-sm md:px-6 lg:space-y-0'
-        >
-          <FormField
-            control={codeForm.control}
-            name='prompt'
-            render={({ field }) => (
-              <FormItem className='col-span-6 lg:col-span-5'>
-                <FormControl className='m-0 p-0'>
+    <Form {...codeForm}>
+      <form
+        onSubmit={codeForm.handleSubmit(onSubmit)}
+        className='grid w-full grid-cols-6 gap-2 space-y-2 rounded-lg
+          border px-3 py-2 focus-within:shadow-sm md:space-y-0 md:px-4'
+      >
+        <FormField
+          control={codeForm.control}
+          name='prompt'
+          render={({ field }) => (
+            <FormItem className='col-span-6 md:col-span-5'>
+              <FormControl className='m-0 p-0'>
+                <div className='relative flex w-full'>
                   <Input
                     disabled={isLoading}
                     placeholder='Create a React client component template.'
-                    className='border-0 px-2 outline-none 
-                    focus-visible:ring-0 focus-visible:ring-transparent'
+                    className='border-0 px-2 pr-16 outline-none focus-visible:ring-0 
+                    focus-visible:ring-transparent sm:pr-0'
                     {...field}
                   />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <Button
-            className='col-span-6 w-full lg:col-span-1'
-            disabled={isLoading}
-          >
-            Generate
-          </Button>
-        </form>
-      </Form>
-    </div>
+                  <TooltipWrapper tooltip={'Generate'}>
+                    <Button
+                      className='absolute right-1 top-1 flex md:right-0 md:top-0 
+                      md:hidden'
+                      variant={'outline'}
+                      size={'icon'}
+                      disabled={isLoading}
+                      type='submit'
+                    >
+                      <ArrowUpIcon />
+                    </Button>
+                  </TooltipWrapper>
+                </div>
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <Button
+          className='hidden md:block'
+          variant={'default'}
+          size={'default'}
+          disabled={isLoading}
+          type={'submit'}
+        >
+          Generate
+        </Button>
+      </form>
+    </Form>
   );
 };
 

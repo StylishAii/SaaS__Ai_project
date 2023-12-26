@@ -60,7 +60,7 @@ const ConversationContent = () => {
   return (
     <div
       className={cn(
-        'relative flex max-h-full min-h-[100px] w-full justify-center px-4 md:px-6',
+        'relative flex max-h-full min-h-[100px] w-full justify-center px-3 md:px-4',
         filteredMessages.length === 0 && 'h-full',
       )}
     >

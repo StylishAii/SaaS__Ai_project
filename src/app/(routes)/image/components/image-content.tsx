@@ -13,7 +13,7 @@ const ImageContent = ({ images }: ImageContentProps) => {
   return (
     <div
       className={cn(
-        'flex max-h-full min-h-[100px] w-full justify-center px-4 md:px-6',
+        'flex max-h-full min-h-[100px] w-full justify-center px-3 md:px-4',
         images.length === 0 && 'h-full',
       )}
     >

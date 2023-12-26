@@ -61,7 +61,7 @@ const CodeGenerationContent = () => {
   return (
     <div
       className={cn(
-        'relative flex max-h-full min-h-[100px] w-full justify-center px-4 md:px-6',
+        'relative flex max-h-full min-h-[100px] w-full justify-center px-3 md:px-4',
         filteredMessages.length === 0 && 'h-full',
       )}
     >
@@ -70,7 +70,7 @@ const CodeGenerationContent = () => {
       ) : (
         <div
           ref={divRef}
-          className='no-scrollbar relative flex h-full w-full flex-col gap-y-4 overflow-y-auto'
+          className='no-scrollbar flex h-full w-full flex-col gap-y-4 overflow-y-auto'
         >
           {filteredMessages.map((message, index) => (
             <div
@@ -94,7 +94,7 @@ const CodeGenerationContent = () => {
                   pre: ({ node, ...props }) => (
                     <div
                       className='my-2 w-full overflow-auto rounded-lg 
-                      bg-black/10 p-2'
+                    bg-black/10 p-2'
                     >
                       <pre {...props} />
                     </div>

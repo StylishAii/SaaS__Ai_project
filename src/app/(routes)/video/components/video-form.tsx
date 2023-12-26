@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
+import { ArrowUpIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
@@ -9,6 +10,7 @@ import { toast } from 'sonner';
 
 import { VideoFormSchema, VideoFormValues } from '../data';
 
+import TooltipWrapper from '@/components/tooltip-wrapper';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -59,29 +61,46 @@ const VideoForm = ({ setVideo }: VideoFormProps) => {
       <Form {...videoForm}>
         <form
           onSubmit={videoForm.handleSubmit(onSubmit)}
-          className='grid w-full grid-cols-6 gap-2 space-y-2 rounded-lg
-          border p-4 px-3 focus-within:shadow-sm md:px-6 lg:space-y-0'
+          className='grid w-full grid-cols-6 gap-2 rounded-lg
+          border py-2 px-3 focus-within:shadow-sm md:px-4'
         >
           <FormField
             control={videoForm.control}
             name='prompt'
             render={({ field }) => (
-              <FormItem className='col-span-6 lg:col-span-5'>
+              <FormItem className='col-span-6 md:col-span-5'>
                 <FormControl className='m-0 p-0'>
-                  <Input
-                    disabled={isLoading}
-                    placeholder='Dog chasing its tail.'
-                    className='border-0 px-2 outline-none 
-                    focus-visible:ring-0 focus-visible:ring-transparent'
-                    {...field}
-                  />
+                  <div className='relative flex w-full'>
+                    <Input
+                      disabled={isLoading}
+                      placeholder='Dog chasing its tail.'
+                      className='border-0 px-2 outline-none 
+                      focus-visible:ring-0 focus-visible:ring-transparent'
+                      {...field}
+                    />
+                    <TooltipWrapper tooltip={'Generate'}>
+                      <Button
+                        className='absolute right-1 top-1 flex md:right-0 md:top-0 
+                        md:hidden'
+                        variant={'outline'}
+                        size={'icon'}
+                        disabled={isLoading}
+                        type='submit'
+                      >
+                        <ArrowUpIcon />
+                      </Button>
+                    </TooltipWrapper>
+                  </div>
                 </FormControl>
               </FormItem>
             )}
           />
           <Button
-            className='col-span-6 w-full lg:col-span-1'
+            className='hidden md:block'
+            variant={'default'}
+            size={'default'}
             disabled={isLoading}
+            type={'submit'}
           >
             Generate
           </Button>

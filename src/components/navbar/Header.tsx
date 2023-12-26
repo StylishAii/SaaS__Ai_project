@@ -25,7 +25,7 @@ const Header = () => {
         onClick={() => setIsActive(false)}
       />
       <div
-        className='absolute left-4 top-4 md:left-6 md:top-6'
+        className='absolute left-4 top-4'
         style={{
           height: `calc(100vh - ${isMediumWidth ? '0px' : '32px'})`,
           width: '100vw',
@@ -43,7 +43,7 @@ const Header = () => {
         </MotionDiv>
         <NavbarButton isActive={isActive} setIsActive={setIsActive} />
       </div>
-      <div className='pointer-events-auto absolute right-4 top-4 md:right-6 md:top-6'>
+      <div className='pointer-events-auto absolute right-4 top-4'>
         <UserButton afterSignOutUrl={'/'} />
       </div>
     </div>

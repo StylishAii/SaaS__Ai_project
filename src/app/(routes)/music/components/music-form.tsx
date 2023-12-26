@@ -67,8 +67,8 @@ const MusicForm = ({ setMusic }: MusicFormProps) => {
       <Form {...musicForm}>
         <form
           onSubmit={musicForm.handleSubmit(onSubmit)}
-          className='grid w-full grid-cols-6 gap-2 space-y-2 rounded-lg
-          border p-4 px-3 focus-within:shadow-sm md:px-6 lg:space-y-0'
+          className='grid w-full grid-cols-6 gap-2 rounded-lg
+          border px-3 py-2 focus-within:shadow-sm md:px-4'
         >
           <FormField
             control={musicForm.control}
