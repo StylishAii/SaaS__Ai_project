@@ -4,25 +4,32 @@ import { eq } from 'drizzle-orm';
 import { orderBy } from 'lodash';
 import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
 
+import { codeGenerationSetting } from '@/app/(routes)/code/data';
+
 import { db } from '@/db';
-import { code } from '@/db/schema';
-import { User } from '@/db/types';
+import { users } from '@/db/schema';
 
 export const fetchCode = async (
-  user: User,
+  userId: string,
 ): Promise<ChatCompletionMessageParam[]> => {
-  const codes = await db.query.code
-    .findMany({
-      where: eq(code.authorId, user.id),
-    })
-    .then(
-      codes =>
-        /* Order and Return Mapped Codes to only include role and content */
-        orderBy(codes, 'index', 'asc').map(({ role, content }) => ({
+  const user = await db.query.users.findFirst({
+    where: eq(users.userId, userId),
+    with: { code: true },
+  });
+
+  if (!user) {
+    throw new Error('User not found');
+  }
+
+  const { code } = user;
+
+  const modifiedCode =
+    code.length === 0
+      ? [codeGenerationSetting]
+      : (orderBy(code, 'index', 'asc').map(({ role, content }) => ({
           role,
           content,
-        })) as ChatCompletionMessageParam[],
-    );
+        })) as ChatCompletionMessageParam[]);
 
-  return codes;
+  return modifiedCode;
 };

@@ -5,24 +5,34 @@ import { orderBy } from 'lodash';
 import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
 
 import { db } from '@/db';
-import { conversation } from '@/db/schema';
-import { User } from '@/db/types';
+import { users } from '@/db/schema';
 
 export const fetchConversations = async (
-  user: User,
+  userId: string,
 ): Promise<ChatCompletionMessageParam[]> => {
-  const conversations = await db.query.conversation
-    .findMany({
-      where: eq(conversation.authorId, user.id),
-    })
-    .then(
-      conversations =>
-        /* Order and Return Mapped Conversations to only include role and content */
-        orderBy(conversations, 'index', 'asc').map(({ role, content }) => ({
+  const user = await db.query.users.findFirst({
+    where: eq(users.userId, userId),
+    with: { conversations: true },
+  });
+
+  if (!user) {
+    throw new Error('User not found');
+  }
+
+  const { conversations } = user;
+
+  const modifiedConversation =
+    conversations.length === 0
+      ? [
+          {
+            role: 'system' as const,
+            content: user.about,
+          },
+        ]
+      : (orderBy(conversations, 'index', 'asc').map(({ role, content }) => ({
           role,
           content,
-        })) as ChatCompletionMessageParam[],
-    );
+        })) as ChatCompletionMessageParam[]);
 
-  return conversations;
+  return modifiedConversation;
 };

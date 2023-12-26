@@ -1,5 +1,7 @@
+import { auth } from '@clerk/nextjs';
+import { redirect } from 'next/navigation';
+
 import { fetchConversations } from '@/actions/fetchConversations';
-import { fetchUser } from '@/actions/fetchUser';
 import { ConversationGeneration as conversationGeneration } from '@/constants';
 
 import Heading from '@/components/heading';
@@ -8,19 +10,13 @@ import ConversationBody from './components/conversation-body';
 const ConversationPage = async () => {
   const { title, api, icon, bgColor, textColor } = conversationGeneration;
 
-  const user = await fetchUser();
+  const { userId } = auth();
 
-  const conversations = await fetchConversations(user);
+  if (!userId) {
+    redirect('/');
+  }
 
-  const initialPrompts =
-    conversations.length === 0
-      ? [
-          {
-            role: 'system' as const,
-            content: user.about,
-          },
-        ]
-      : conversations;
+  const conversations = await fetchConversations(userId);
 
   return (
     <div className='flex h-full flex-col'>
@@ -31,7 +27,7 @@ const ConversationPage = async () => {
         bgColor={bgColor}
         textColor={textColor}
       />
-      <ConversationBody initialPrompts={initialPrompts} />
+      <ConversationBody initialPrompts={conversations} />
     </div>
   );
 };
