@@ -5,6 +5,7 @@ import axios from 'axios';
 import { ArrowUpIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
@@ -18,6 +19,7 @@ import { Input } from '@/components/ui/input';
 
 const CodeForm = () => {
   const router = useRouter();
+  const [isMounted, setIsMounted] = useState(false);
   const { code, setCode } = useCode();
   const codeForm = useForm<CodeFormValues>({
     resolver: zodResolver(CodeFormSchema),
@@ -66,6 +68,14 @@ const CodeForm = () => {
       router.refresh();
     }
   };
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <Form {...codeForm}>

@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { ArrowUpIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
@@ -21,6 +21,7 @@ interface VideoFormProps {
 
 const VideoForm = ({ setVideo }: VideoFormProps) => {
   const router = useRouter();
+  const [isMounted, setIsMounted] = useState(false);
   const videoForm = useForm<VideoFormValues>({
     resolver: zodResolver(VideoFormSchema),
     defaultValues: {
@@ -56,13 +57,21 @@ const VideoForm = ({ setVideo }: VideoFormProps) => {
     }
   };
 
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
+
   return (
     <div>
       <Form {...videoForm}>
         <form
           onSubmit={videoForm.handleSubmit(onSubmit)}
           className='grid w-full grid-cols-6 gap-2 rounded-lg
-          border py-2 px-3 focus-within:shadow-sm md:px-4'
+          border px-3 py-2 focus-within:shadow-sm md:px-4'
         >
           <FormField
             control={videoForm.control}

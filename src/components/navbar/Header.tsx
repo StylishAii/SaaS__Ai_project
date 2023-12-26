@@ -1,6 +1,5 @@
 'use client';
 
-import { UserButton } from '@clerk/nextjs';
 import { AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 
@@ -10,6 +9,7 @@ import Navbar from '@/components/navbar';
 import { navBarVariants } from '@/components/navbar/animations';
 import NavbarButton from '@/components/navbar/navbar-button';
 import { MotionDiv } from '@/components/ui/motion-div';
+import ClerkButton from '@/components/clerk-button';
 
 const Header = () => {
   const [isActive, setIsActive] = useState<boolean>(false);
@@ -44,7 +44,7 @@ const Header = () => {
         <NavbarButton isActive={isActive} setIsActive={setIsActive} />
       </div>
       <div className='pointer-events-auto absolute right-4 top-4'>
-        <UserButton afterSignOutUrl={'/'} />
+        <ClerkButton />
       </div>
     </div>
   );
