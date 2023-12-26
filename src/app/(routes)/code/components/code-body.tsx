@@ -1,30 +1,35 @@
 'use client';
 
-import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
-import { useState } from 'react';
-
+import { useCode } from '@/hooks/useCode';
 import { cn } from '@/lib/utils';
-import { codeGenerationSetting } from '../data';
+import { useEffect } from 'react';
 
+import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
 import CodeGenerationContent from './code-content';
 import CodeGenerationForm from './code-form';
 
-const CodeGenerationBody = () => {
-  const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([
-    codeGenerationSetting,
-  ]);
+interface CodeBodyProps {
+  initialPrompts: ChatCompletionMessageParam[];
+}
+
+const CodeGenerationBody = ({ initialPrompts }: CodeBodyProps) => {
+  const { code, setCode } = useCode();
+
+  useEffect(() => {
+    setCode(initialPrompts);
+  }, [initialPrompts, setCode]);
 
   return (
     <div className='mx-auto mt-4 h-full w-full max-w-6xl overflow-hidden'>
       <div
         className={cn(
           'flex h-full flex-col gap-y-4',
-          messages.length === 0 ? 'justify-start' : 'justify-end',
+          code.length === 0 ? 'justify-start' : 'justify-end',
         )}
       >
-        <CodeGenerationContent messages={messages} />
-        <div className={cn('w-full', messages.length === 0 && 'mt-auto')}>
-          <CodeGenerationForm messages={messages} setMessages={setMessages} />
+        <CodeGenerationContent />
+        <div className={cn('w-full', code.length === 0 && 'mt-auto')}>
+          <CodeGenerationForm />
         </div>
       </div>
     </div>

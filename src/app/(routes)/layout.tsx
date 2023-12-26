@@ -1,6 +1,8 @@
 import Header from '@/components/navbar/header';
 
 const RoutesLayout = ({ children }: { children: React.ReactNode }) => {
+  // TODO: Show Navbar in 2XL+ screens
+
   return (
     <>
       <div className='relative z-30'>

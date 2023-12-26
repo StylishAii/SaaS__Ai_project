@@ -1,19 +1,17 @@
 'use client';
 
-import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
 import Markdown from 'react-markdown';
 
+import { useCode } from '@/hooks/useCode';
 import { cn } from '@/lib/utils';
 
 import Avatar from '@/components/custom-avatar';
 import Empty from '@/components/empty';
 
-interface CodeGenerationContentProps {
-  messages: ChatCompletionMessageParam[];
-}
+const CodeGenerationContent = () => {
+  const { code } = useCode();
 
-const CodeGenerationContent = ({ messages }: CodeGenerationContentProps) => {
-  const filteredMessages = messages.filter(
+  const filteredMessages = code.filter(
     message => message.role !== 'system',
   );
 

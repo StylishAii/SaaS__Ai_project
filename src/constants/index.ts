@@ -30,9 +30,10 @@ const LandingPrompts = [
   },
 ];
 
-const Conversation = {
+const ConversationGeneration = {
   title: 'Conversation',
   href: '/conversation',
+  api: '/api/conversation',
   icon: MessageSquareIcon,
   bgColor: 'bg-orange-500/20',
   textColor: 'text-orange-500',
@@ -41,6 +42,7 @@ const Conversation = {
 const ImageGeneration = {
   title: 'Image Generation',
   href: '/image',
+  api: '/api/image',
   icon: ImageIcon,
   bgColor: 'bg-yellow-500/20',
   textColor: 'text-yellow-500',
@@ -49,6 +51,7 @@ const ImageGeneration = {
 const VideoGeneration = {
   title: 'Video Generation',
   href: '/video',
+  api: '/api/video',
   icon: VideoIcon,
   bgColor: 'bg-green-500/20',
   textColor: 'text-green-500',
@@ -57,6 +60,7 @@ const VideoGeneration = {
 const MusicGeneration = {
   title: 'Music Generation',
   href: '/music',
+  api: '/api/music',
   icon: MusicIcon,
   bgColor: 'bg-blue-500/20',
   textColor: 'text-blue-500',
@@ -65,6 +69,7 @@ const MusicGeneration = {
 const CodeGeneration = {
   title: 'Code Generation',
   href: '/code',
+  api: '/api/code',
   icon: CodeIcon,
   bgColor: 'bg-indigo-500/20',
   textColor: 'text-indigo-500',
@@ -79,7 +84,7 @@ const Settings = {
 };
 
 const ServicesLinks = [
-  Conversation,
+  ConversationGeneration,
   ImageGeneration,
   VideoGeneration,
   MusicGeneration,
@@ -88,7 +93,7 @@ const ServicesLinks = [
 
 export {
   CodeGeneration,
-  Conversation,
+  ConversationGeneration,
   ImageGeneration,
   LandingPrompts,
   MusicGeneration,

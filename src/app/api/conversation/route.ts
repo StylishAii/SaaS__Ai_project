@@ -112,9 +112,12 @@ export const DELETE = async (req: Request) => {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    await db.delete(conversation).where(eq(conversation.authorId, user.id)).execute();
+    await db
+      .delete(conversation)
+      .where(eq(conversation.authorId, user.id))
+      .execute();
 
-    return new NextResponse('Deleted', { status: 200 });
+    return new NextResponse('Deleted Conversation', { status: 200 });
   } catch (err: any) {
     console.log('CONVERSATION_DELETE_ERROR:', err);
     return new NextResponse('Internal Error', { status: 500 });

@@ -4,14 +4,13 @@ import Heading from '@/components/heading';
 import VideoBody from './components/video-body';
 
 const VideoPage = () => {
-  const { title, icon, bgColor, textColor } = video;
-
-  // TODO: on 2xl screens have navbar open as sidebar
+  const { title, api, icon, bgColor, textColor } = video;
 
   return (
     <div className='flex h-full flex-col'>
       <Heading
         title={title}
+        api={api}
         icon={icon}
         bgColor={bgColor}
         textColor={textColor}

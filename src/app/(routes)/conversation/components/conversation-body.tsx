@@ -10,15 +10,15 @@ import ConversationContent from './conversation-content';
 import ConversationForm from './conversation-form';
 
 interface ConversationBodyProps {
-  userContext: ChatCompletionMessageParam[];
+  initialPrompts: ChatCompletionMessageParam[];
 }
 
-const ConversationBody = ({ userContext }: ConversationBodyProps) => {
+const ConversationBody = ({ initialPrompts }: ConversationBodyProps) => {
   const { conversation, setConversation } = useConversation();
 
   useEffect(() => {
-    setConversation(userContext);
-  }, [userContext, setConversation]);
+    setConversation(initialPrompts);
+  }, [initialPrompts, setConversation]);
 
   return (
     <div className='mx-auto mt-4 h-full w-full max-w-6xl overflow-hidden'>

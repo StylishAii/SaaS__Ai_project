@@ -4,14 +4,13 @@ import Heading from '@/components/heading';
 import MusicBody from './components/music-body';
 
 const MusicPage = () => {
-  const { title, icon, bgColor, textColor } = music;
-
-  // TODO: on 2xl screens have navbar open as sidebar
+  const { title, api, icon, bgColor, textColor } = music;
 
   return (
     <div className='flex h-full flex-col'>
       <Heading
         title={title}
+        api={api}
         icon={icon}
         bgColor={bgColor}
         textColor={textColor}

@@ -4,23 +4,19 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
-import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
+import { useCode } from '@/hooks/useCode';
 import { CodeFormSchema, CodeFormValues } from '../data';
 
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
-interface CodeFormProps {
-  messages: ChatCompletionMessageParam[];
-  setMessages: Dispatch<SetStateAction<ChatCompletionMessageParam[]>>;
-}
-
-const CodeForm = ({ messages, setMessages }: CodeFormProps) => {
+const CodeForm = () => {
   const router = useRouter();
+  const { code, setCode } = useCode();
   const codeForm = useForm<CodeFormValues>({
     resolver: zodResolver(CodeFormSchema),
     defaultValues: {
@@ -46,7 +42,7 @@ const CodeForm = ({ messages, setMessages }: CodeFormProps) => {
         content: values.prompt,
       };
 
-      const newMessages = [...messages, userMessage];
+      const newMessages = [...code, userMessage];
 
       const response = await axios.post('/api/code', {
         messages: newMessages,
@@ -54,7 +50,7 @@ const CodeForm = ({ messages, setMessages }: CodeFormProps) => {
 
       if (response.status === 200) {
         toast.dismiss(toastId);
-        setMessages(current => [...current, userMessage, response.data]);
+        setCode([...newMessages, response.data]);
         codeForm.reset();
       } else {
         toast.error('Something went wrong.', {

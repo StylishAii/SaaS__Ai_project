@@ -7,12 +7,19 @@ import { Separator } from '@/components/ui/separator';
 
 interface HeadingProps {
   title: string;
+  api?: string;
   bgColor: string;
   textColor: string;
   icon: LucideIcon;
 }
 
-const Heading = ({ title, bgColor, textColor, icon: Icon }: HeadingProps) => {
+const Heading = ({
+  title,
+  api,
+  bgColor,
+  textColor,
+  icon: Icon,
+}: HeadingProps) => {
   return (
     <div className='w-full px-4 md:px-6'>
       <div className='flex w-full flex-row items-center gap-x-2 md:gap-x-4'>
@@ -27,7 +34,7 @@ const Heading = ({ title, bgColor, textColor, icon: Icon }: HeadingProps) => {
         <h1 className={'z-10 text-2xl font-bold text-primary md:text-3xl'}>
           {title}
         </h1>
-        <ResetFormButton title={title} />
+        {api && <ResetFormButton title={title} api={api} />}
       </div>
       <Separator className='mt-4 h-[2px]' />
     </div>

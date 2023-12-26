@@ -12,21 +12,28 @@ import { Button } from '@/components/ui/button';
 import { Modal } from '@/components/ui/modal';
 
 const ResetFormModal = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const { isOpen, onClose } = useResetFormModal();
-  const { resetConversation } = useConversation();
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { resetConversation } = useConversation();
+  const { isOpen, onClose, title, api } = useResetFormModal();
+
+  const fixedTitle = title?.split(' ')[0];
 
   const onReset = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.delete('/api/conversation');
+      if (api) {
+        const response = await axios.delete(api);
 
-      if (response.status === 200) {
-        toast.success('Conversation reset.');
-        resetConversation();
+        if (response.status === 200) {
+          toast.success(`${title} Reset`);
+          resetConversation();
+        } else {
+          toast.error('Something went wrong.');
+        }
       } else {
-        toast.error('Something went wrong.');
+        throw new Error('No API provided.');
       }
     } catch (err: any) {
       toast.error(err.message);
@@ -40,14 +47,14 @@ const ResetFormModal = () => {
 
   return (
     <Modal
-      title='Reset conversation history?'
+      title={`Reset ${title} History?`}
       description='This cannot be undone.'
       isOpen={isOpen}
       onClose={onClose}
     >
       <div className='flex w-full items-center justify-end gap-x-2 pt-6'>
         <Button disabled={isLoading} variant={'destructive'} onClick={onReset}>
-          Reset Conversation
+          Reset {fixedTitle}
         </Button>
       </div>
     </Modal>

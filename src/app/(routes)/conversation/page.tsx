@@ -1,18 +1,18 @@
 import { fetchConversations } from '@/actions/fetchConversations';
 import { fetchUser } from '@/actions/fetchUser';
-import { Conversation as conversation } from '@/constants';
+import { ConversationGeneration as conversationGeneration } from '@/constants';
 
 import Heading from '@/components/heading';
 import ConversationBody from './components/conversation-body';
 
 const ConversationPage = async () => {
-  const { title, icon, bgColor, textColor } = conversation;
+  const { title, api, icon, bgColor, textColor } = conversationGeneration;
 
   const user = await fetchUser();
 
   const conversations = await fetchConversations(user);
 
-  const userContext =
+  const initialPrompts =
     conversations.length === 0
       ? [
           {
@@ -26,11 +26,12 @@ const ConversationPage = async () => {
     <div className='flex h-full flex-col'>
       <Heading
         title={title}
+        api={api}
         icon={icon}
         bgColor={bgColor}
         textColor={textColor}
       />
-      <ConversationBody userContext={userContext} />
+      <ConversationBody initialPrompts={initialPrompts} />
     </div>
   );
 };
