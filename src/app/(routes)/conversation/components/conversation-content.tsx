@@ -44,6 +44,10 @@ const ConversationContent = () => {
     }
   }, [isMounted]);
 
+  useEffect(() => {
+    scrollToBottom();
+  }, [conversation]);
+
   const filteredMessages = useMemo(
     () => conversation.filter(message => message.role !== 'system'),
     [conversation],

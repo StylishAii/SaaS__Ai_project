@@ -45,6 +45,10 @@ const CodeGenerationContent = () => {
     }
   }, [isMounted]);
 
+  useEffect(() => {
+    scrollToBottom();
+  }, [code]);
+
   const filteredMessages = useMemo(
     () => code.filter(message => message.role !== 'system'),
     [code],
