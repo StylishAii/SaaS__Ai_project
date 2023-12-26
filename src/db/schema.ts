@@ -18,20 +18,39 @@ export const users = pgTable('users', {
 });
 
 export const userRelations = relations(users, ({ many }) => ({
-  messages: many(prompt),
+  conversation: many(conversation),
+  code: many(code),
 }));
 
-export const prompt = pgTable('prompt', {
+export const conversation = pgTable('conversation', {
   id: serial('id').primaryKey(),
   authorId: integer('author_id')
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
   index: integer('index').notNull(),
-  role: varchar('prompt', { length: 10 }).notNull(),
-  content: text('response').notNull(),
+  role: varchar('role', { length: 10 }).notNull(),
+  content: text('content').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 
-export const promptRelations = relations(prompt, ({ one }) => ({
-  author: one(users, { fields: [prompt.authorId], references: [users.id] }),
+export const conversationRelations = relations(conversation, ({ one }) => ({
+  author: one(users, {
+    fields: [conversation.authorId],
+    references: [users.id],
+  }),
+}));
+
+export const code = pgTable('code', {
+  id: serial('id').primaryKey(),
+  authorId: integer('author_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  index: integer('index').notNull(),
+  role: varchar('role', { length: 10 }).notNull(),
+  content: text('content').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const codeRelations = relations(code, ({ one }) => ({
+  author: one(users, { fields: [code.authorId], references: [users.id] }),
 }));

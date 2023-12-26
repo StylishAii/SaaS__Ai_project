@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
 
 import { db } from '@/db';
-import { prompt, users } from '@/db/schema';
+import { conversation, users } from '@/db/schema';
 import { openai } from '@/lib/open-ai';
 
 interface ConversationRequest {
@@ -49,17 +49,17 @@ export const POST = async (req: Request) => {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    const existingPromptsLength = await db.query.prompt
+    const existingConversationsLength = await db.query.conversation
       .findMany({
-        where: eq(prompt.authorId, user.id),
+        where: eq(conversation.authorId, user.id),
       })
-      .then(prompts => prompts.length)
+      .then(conversations => conversations.length)
       .catch(() => -1);
 
-    if (existingPromptsLength === -1) {
+    if (existingConversationsLength === -1) {
       messages.forEach(async ({ role, content }, index) => {
         await db
-          .insert(prompt)
+          .insert(conversation)
           .values({
             authorId: user.id,
             index,
@@ -73,9 +73,9 @@ export const POST = async (req: Request) => {
     }
 
     messages.forEach(async ({ role, content }, index) => {
-      index >= existingPromptsLength &&
+      index >= existingConversationsLength &&
         (await db
-          .insert(prompt)
+          .insert(conversation)
           .values({
             authorId: user.id,
             index,
@@ -112,7 +112,7 @@ export const DELETE = async (req: Request) => {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    await db.delete(prompt).where(eq(prompt.authorId, user.id)).execute();
+    await db.delete(conversation).where(eq(conversation.authorId, user.id)).execute();
 
     return new NextResponse('Deleted', { status: 200 });
   } catch (err: any) {

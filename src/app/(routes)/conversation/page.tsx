@@ -1,4 +1,4 @@
-import { fetchPrompts } from '@/actions/fetchPrompts';
+import { fetchConversations } from '@/actions/fetchConversations';
 import { fetchUser } from '@/actions/fetchUser';
 import { Conversation as conversation } from '@/constants';
 
@@ -10,17 +10,17 @@ const ConversationPage = async () => {
 
   const user = await fetchUser();
 
-  const prompts = await fetchPrompts(user);
+  const conversations = await fetchConversations(user);
 
   const userContext =
-    prompts.length === 0
+    conversations.length === 0
       ? [
           {
             role: 'system' as const,
             content: user.about,
           },
         ]
-      : prompts;
+      : conversations;
 
   return (
     <div className='flex h-full flex-col'>
