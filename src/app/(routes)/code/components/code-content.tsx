@@ -11,9 +11,7 @@ import Empty from '@/components/empty';
 const CodeGenerationContent = () => {
   const { code } = useCode();
 
-  const filteredMessages = code.filter(
-    message => message.role !== 'system',
-  );
+  const filteredMessages = code.filter(message => message.role !== 'system');
 
   return (
     <div
@@ -29,12 +27,8 @@ const CodeGenerationContent = () => {
           {filteredMessages.map((message, index) => (
             <div
               key={index}
-              className={cn(
-                'flex w-full items-start gap-x-4 rounded-lg p-4',
-                message.role === 'user'
-                  ? 'border border-black/10 bg-white'
-                  : 'border border-black/10 bg-white',
-              )}
+              className='flex w-full items-start gap-x-4 rounded-lg border 
+              border-black/10 bg-white p-4'
             >
               {message.role === 'user' ? (
                 <Avatar role={'user'} />
@@ -43,14 +37,17 @@ const CodeGenerationContent = () => {
               )}
               <Markdown
                 components={{
-                  ul: ({ node, ...props }) => (
-                    <ul className='list-disc pl-4' {...props} />
+                  ol: ({ node, ...props }) => (
+                    <ol className='list-decimal pl-6' {...props} />
                   ),
                   li: ({ node, ...props }) => (
                     <li className='mb-1' {...props} />
                   ),
                   pre: ({ node, ...props }) => (
-                    <div className='my-2 w-full overflow-auto rounded-lg bg-black/10 p-2'>
+                    <div
+                      className='my-2 w-full overflow-auto rounded-lg 
+                      bg-black/10 p-2'
+                    >
                       <pre {...props} />
                     </div>
                   ),
