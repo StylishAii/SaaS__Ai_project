@@ -1,29 +1,73 @@
 'use client';
 
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Markdown from 'react-markdown';
 
 import { useCode } from '@/hooks/useCode';
+import useScroll from '@/hooks/useScroll';
 import { cn } from '@/lib/utils';
 
 import Avatar from '@/components/custom-avatar';
 import Empty from '@/components/empty';
+import ScrollToBottomArrow from '@/components/scroll-to-bottom-arrow';
 
 const CodeGenerationContent = () => {
   const { code } = useCode();
+  const [isShowArrow, setIsShowArrow] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const divRef = useRef<HTMLDivElement>(null!);
 
-  const filteredMessages = code.filter(message => message.role !== 'system');
+  const scrollToBottom = () => {
+    if (divRef.current) {
+      divRef.current.scrollTo({
+        top: divRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  const handleScroll = () => {
+    setIsShowArrow(
+      divRef.current.scrollTop + divRef.current.clientHeight <
+        divRef.current.scrollHeight - 200,
+    );
+  };
+
+  useScroll(divRef, handleScroll);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isMounted) {
+      divRef.current.scrollTop = divRef.current.scrollHeight;
+    }
+  }, [isMounted]);
+
+  const filteredMessages = useMemo(
+    () => code.filter(message => message.role !== 'system'),
+    [code],
+  );
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <div
       className={cn(
-        'flex max-h-full min-h-[100px] w-full justify-center px-4 md:px-6',
+        'relative flex max-h-full min-h-[100px] w-full justify-center px-4 md:px-6',
         filteredMessages.length === 0 && 'h-full',
       )}
     >
       {filteredMessages.length === 0 ? (
         <Empty label='Need help with anything?' />
       ) : (
-        <div className='no-scrollbar flex h-full w-full flex-col gap-y-4 overflow-y-auto'>
+        <div
+          ref={divRef}
+          className='no-scrollbar relative flex h-full w-full flex-col gap-y-4 overflow-y-auto'
+        >
           {filteredMessages.map((message, index) => (
             <div
               key={index}
@@ -63,6 +107,7 @@ const CodeGenerationContent = () => {
           ))}
         </div>
       )}
+      <ScrollToBottomArrow isTrigger={isShowArrow} onClick={scrollToBottom} />
     </div>
   );
 };

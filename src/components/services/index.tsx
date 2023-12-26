@@ -3,7 +3,7 @@
 import { ArrowRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-import { serviceVariants } from '@/components/services/animation';
+import { serviceVariants } from '@/components/services/animations';
 import { ServicesLinks } from '@/constants';
 
 import { Card, CardTitle } from '@/components/ui/card';

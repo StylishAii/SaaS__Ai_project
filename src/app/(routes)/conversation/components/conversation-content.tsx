@@ -1,31 +1,72 @@
 'use client';
 
-import { Fragment } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useConversation } from '@/hooks/useConversation';
+import useScroll from '@/hooks/useScroll';
 import { cn } from '@/lib/utils';
 
 import Avatar from '@/components/custom-avatar';
 import Empty from '@/components/empty';
+import ScrollToBottomArrow from '@/components/scroll-to-bottom-arrow';
 
 const ConversationContent = () => {
   const { conversation } = useConversation();
+  const [isShowArrow, setIsShowArrow] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const divRef = useRef<HTMLDivElement>(null!);
 
-  const filteredMessages = conversation.filter(
-    message => message.role !== 'system',
+  const scrollToBottom = () => {
+    if (divRef.current) {
+      divRef.current.scrollTo({
+        top: divRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  const handleScroll = () => {
+    setIsShowArrow(
+      divRef.current.scrollTop + divRef.current.clientHeight <
+        divRef.current.scrollHeight - 200,
+    );
+  };
+
+  useScroll(divRef, handleScroll);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isMounted) {
+      divRef.current.scrollTop = divRef.current.scrollHeight;
+    }
+  }, [isMounted]);
+
+  const filteredMessages = useMemo(
+    () => conversation.filter(message => message.role !== 'system'),
+    [conversation],
   );
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <div
       className={cn(
-        'flex max-h-full min-h-[100px] w-full justify-center px-4 md:px-6',
+        'relative flex max-h-full min-h-[100px] w-full justify-center px-4 md:px-6',
         filteredMessages.length === 0 && 'h-full',
       )}
     >
       {filteredMessages.length === 0 ? (
         <Empty label='How can I help you today?' />
       ) : (
-        <div className='no-scrollbar flex h-full w-full flex-col gap-y-4 overflow-y-auto'>
+        <div
+          ref={divRef}
+          className='no-scrollbar flex h-full w-full flex-col gap-y-4 overflow-y-auto'
+        >
           {filteredMessages.map(({ content, role }, index) => {
             const message = (content as string)
               .split('\n')
@@ -57,6 +98,7 @@ const ConversationContent = () => {
           })}
         </div>
       )}
+      <ScrollToBottomArrow isTrigger={isShowArrow} onClick={scrollToBottom} />
     </div>
   );
 };
