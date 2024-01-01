@@ -4,7 +4,6 @@ services:
   db:
     container_name: ai-saas-db
     image: postgres
-    restart: always
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
@@ -17,6 +16,12 @@ services:
   adminer:
     container_name: ai-saas-adminer
     image: adminer
-    restart: always
     ports:
       - 8080:8080
+
+  webhooks:
+    container_name: ai-saas-webhooks
+    image: deltaprojects/smee-client
+    ports:
+      - 3000:3000
+    command: smee -u https://smee.io/0BYa0HCYlkLL1UIo -P '/api/webhooks'

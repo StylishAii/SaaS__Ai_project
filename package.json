@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "sst bind next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -61,6 +61,9 @@
     "prettier-plugin-organize-imports": "^3.2.4",
     "prettier-plugin-tailwindcss": "^0.5.9",
     "tailwindcss": "^3.4.0",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "sst": "^2.39.2",
+    "aws-cdk-lib": "2.110.1",
+    "constructs": "10.3.0"
   }
 }
