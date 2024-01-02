@@ -24,6 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Image } from '@/db/types';
 
 interface ImageFormProps {
   setImages: Dispatch<SetStateAction<string[]>>;
@@ -58,7 +59,7 @@ const ImageForm = ({ setImages }: ImageFormProps) => {
 
       const response = await responsePromise;
 
-      const urls = response.data.map((image: { url: string }) => image.url);
+      const urls = response.data.map((image: Image) => image.url);
 
       if (response.status === 200) {
         setImages(urls);

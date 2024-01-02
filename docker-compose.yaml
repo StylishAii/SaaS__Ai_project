@@ -18,10 +18,3 @@ services:
     image: adminer
     ports:
       - 8080:8080
-
-  webhooks:
-    container_name: ai-saas-webhooks
-    image: deltaprojects/smee-client
-    ports:
-      - 3000:3000
-    command: smee -u https://smee.io/0BYa0HCYlkLL1UIo -P '/api/webhooks'

@@ -20,6 +20,7 @@ export const users = pgTable('users', {
 export const userRelations = relations(users, ({ many }) => ({
   conversations: many(conversation),
   code: many(code),
+  images: many(image),
 }));
 
 export const conversation = pgTable('conversation', {
@@ -53,4 +54,17 @@ export const code = pgTable('code', {
 
 export const codeRelations = relations(code, ({ one }) => ({
   author: one(users, { fields: [code.authorId], references: [users.id] }),
+}));
+
+export const image = pgTable('image', {
+  id: serial('id').primaryKey(),
+  authorId: integer('author_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  url: text('url').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const imageRelations = relations(image, ({ one }) => ({
+  author: one(users, { fields: [image.authorId], references: [users.id] }),
 }));

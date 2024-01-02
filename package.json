@@ -13,6 +13,7 @@
     "migrate": "bun run migration:generate && bun run migration:push"
   },
   "dependencies": {
+    "@aws-sdk/s3-request-presigner": "^3.484.0",
     "@clerk/nextjs": "^4.29.1",
     "@hookform/resolvers": "^3.3.2",
     "@radix-ui/react-avatar": "^1.0.4",

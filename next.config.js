@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['oaidalleapiprodscus.blob.core.windows.net'],
+    domains: [
+      'kpirabaharan-ai-saas-site-imagesbucket02b0ac5a-8tlkvqexhy7k.s3.amazonaws.com',
+    ],
   },
 };
 
