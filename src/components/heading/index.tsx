@@ -10,6 +10,7 @@ interface HeadingProps {
   api?: string;
   bgColor: string;
   textColor: string;
+  showReset: boolean;
   icon: LucideIcon;
 }
 
@@ -18,6 +19,7 @@ const Heading = ({
   api,
   bgColor,
   textColor,
+  showReset,
   icon: Icon,
 }: HeadingProps) => {
   return (
@@ -34,7 +36,9 @@ const Heading = ({
         <h1 className={'z-10 text-2xl font-bold text-primary md:text-3xl'}>
           {title}
         </h1>
-        {api && <ResetFormButton title={title} api={api} />}
+        {api && (
+          <ResetFormButton title={title} showReset={showReset} api={api} />
+        )}
       </div>
       <Separator className='mt-2 h-[2px]' />
     </div>

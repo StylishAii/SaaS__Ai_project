@@ -8,7 +8,7 @@ import Heading from '@/components/heading';
 import CodeGenerationBody from './components/code-body';
 
 const CodeGenerationPage = async () => {
-  const { title, api, icon, bgColor, textColor } = codeGeneration;
+  const { title, api, showReset, icon, bgColor, textColor } = codeGeneration;
 
   const { userId } = auth();
 
@@ -24,6 +24,7 @@ const CodeGenerationPage = async () => {
         title={title}
         api={api}
         icon={icon}
+        showReset={showReset}
         bgColor={bgColor}
         textColor={textColor}
       />

@@ -6,13 +6,14 @@ import { useResetFormModal } from '@/hooks/useResetFormModal';
 interface ResetFormButtonProps {
   title: string;
   api: string;
+  showReset: boolean;
 }
 
-const ResetFormButton = ({ title, api }: ResetFormButtonProps) => {
+const ResetFormButton = ({ title, api, showReset }: ResetFormButtonProps) => {
   const { onOpen } = useResetFormModal();
 
   return (
-    (title === 'Conversation' || title === 'Code Generation') && (
+    showReset && (
       <Button
         onClick={() => onOpen({ title, api })}
         className='ml-auto'

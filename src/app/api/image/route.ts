@@ -119,3 +119,35 @@ export const POST = async (req: Request) => {
     return new NextResponse('Internal Error', { status: 500 });
   }
 };
+
+export const DELETE = async (req: Request) => {
+  try {
+    const { userId } = auth();
+
+    if (!userId) {
+      return new NextResponse('Unauthorized', { status: 401 });
+    }
+
+    if (!openai.apiKey) {
+      return new NextResponse('OpenAI API Key not configured', { status: 500 });
+    }
+
+    const user = await db.query.users.findFirst({
+      where: eq(users.userId, userId),
+    });
+
+    if (!user) {
+      return new NextResponse('Unauthorized', { status: 401 });
+    }
+
+    await db
+      .delete(imagePrompt)
+      .where(eq(imagePrompt.authorId, user.id))
+      .execute();
+
+    return new NextResponse('Deleted Images', { status: 200 });
+  } catch (err: any) {
+    console.log('IMAGE_DELETE_ERROR:', err);
+    return new NextResponse('Internal Error', { status: 500 });
+  }
+};

@@ -8,7 +8,7 @@ import Heading from '@/components/heading';
 import ImageGenerationBody from './components/image-body';
 
 const ImageGenerationPage = async () => {
-  const { title, api, icon, bgColor, textColor } = image;
+  const { title, api, showReset, icon, bgColor, textColor } = image;
 
   const { userId } = auth();
 
@@ -23,6 +23,7 @@ const ImageGenerationPage = async () => {
       <Heading
         title={title}
         api={api}
+        showReset={showReset}
         icon={icon}
         bgColor={bgColor}
         textColor={textColor}

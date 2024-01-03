@@ -8,7 +8,8 @@ import Heading from '@/components/heading';
 import ConversationBody from './components/conversation-body';
 
 const ConversationPage = async () => {
-  const { title, api, icon, bgColor, textColor } = conversationGeneration;
+  const { title, api, showReset, icon, bgColor, textColor } =
+    conversationGeneration;
 
   const { userId } = auth();
 
@@ -23,6 +24,7 @@ const ConversationPage = async () => {
       <Heading
         title={title}
         api={api}
+        showReset={showReset}
         icon={icon}
         bgColor={bgColor}
         textColor={textColor}
