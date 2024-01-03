@@ -24,9 +24,12 @@ export const amountOptions = [
 export type Amount = (typeof amountOptions)[number]['value'];
 
 export const resolutionOptions = [
-  { value: '256x256', label: '256x256' },
-  { value: '512x512', label: '512x512' },
-  { value: '1024x1024', label: '1024x1024' },
+  { value: '256x256 dall-e-2', label: '256x256 (v2)' },
+  { value: '512x512 dall-e-2', label: '512x512 (v2)' },
+  { value: '1024x1024 dall-e-2', label: '1024x1024 (v2)' },
+  { value: '1024x1024 dall-e-3', label: '1024x1024 (v3)' },
+  { value: '1792x1024 dall-e-3', label: '1792x1024 (v3)' },
+  { value: '1024x1792 dall-e-3', label: '1024x1792 (v3)' },
 ] as const;
 
 export type Resolution = (typeof resolutionOptions)[number]['value'];

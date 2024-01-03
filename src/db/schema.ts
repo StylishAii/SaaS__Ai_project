@@ -64,6 +64,7 @@ export const imagePrompt = pgTable('image_prompt', {
   prompt: text('prompt').notNull(),
   amount: integer('amount').notNull(),
   resolution: varchar('resolution', { length: 10 }).notNull(),
+  model: varchar('model', { length: 10 }).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 

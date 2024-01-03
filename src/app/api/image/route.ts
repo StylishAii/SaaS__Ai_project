@@ -5,17 +5,18 @@ import { eq } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
 import { Bucket } from 'sst/node/bucket';
 
-import { Amount, Resolution } from '@/app/(routes)/image/data';
+import { Amount } from '@/app/(routes)/image/data';
 import { db } from '@/db';
 import { image, imagePrompt, users } from '@/db/schema';
 import { openai } from '@/lib/open-ai';
 import axios from 'axios';
-import { Image } from 'openai/resources/images.mjs';
+import { Image, ImageGenerateParams } from 'openai/resources/images.mjs';
 
 interface ImageRequest {
   prompt: string;
   amount?: Amount;
-  resolution?: Resolution;
+  resolution?: ImageGenerateParams['size'];
+  model?: ImageGenerateParams['model'];
 }
 
 export const POST = async (req: Request) => {
@@ -31,7 +32,14 @@ export const POST = async (req: Request) => {
     }
 
     const body = await req.json();
-    const { prompt, amount = '1', resolution = '512x512' }: ImageRequest = body;
+    const {
+      prompt,
+      amount = '1',
+      resolution = '512x512',
+      model = 'dall-e-2',
+    }: ImageRequest = body;
+
+    const n = model === 'dall-e-3' ? 1 : parseInt(amount);
 
     if (!prompt) {
       return new NextResponse('Prompt is required', { status: 400 });
@@ -39,8 +47,8 @@ export const POST = async (req: Request) => {
 
     const response = await openai.images.generate({
       prompt,
-      model: 'dall-e-2',
-      n: parseInt(amount),
+      model,
+      n,
       size: resolution,
     });
 
@@ -61,12 +69,11 @@ export const POST = async (req: Request) => {
       .values({
         authorId: user.id,
         prompt,
-        amount: parseInt(amount),
-        resolution,
+        amount: n,
+        resolution: resolution || '',
+        model: model || '',
       })
       .returning({ id: imagePrompt.id });
-
-    console.log(promptId);
 
     await Promise.all(
       response.data.map(async (imageData: Image) => {

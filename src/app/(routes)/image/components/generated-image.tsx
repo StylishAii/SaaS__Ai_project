@@ -11,7 +11,12 @@ const GeneratedImage = ({ image }: GeneratedImageProps) => {
   return (
     <Card className='overflow-hidden rounded-lg'>
       <div className='relative aspect-square'>
-        <Image src={image} alt={'Image'} fill />
+        <Image
+          src={image}
+          alt={'Image'}
+          fill
+          sizes='(max-width: 600px) 100vw, 600px'
+        />
         <div className='absolute right-2 top-2'>
           <Button
             onClick={() => window.open(image)}

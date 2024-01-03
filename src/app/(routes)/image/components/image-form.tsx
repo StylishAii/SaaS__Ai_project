@@ -33,7 +33,7 @@ const ImageForm = () => {
     defaultValues: {
       prompt: '',
       amount: '1',
-      resolution: '512x512',
+      resolution: '512x512 dall-e-2',
     },
   });
 
@@ -42,7 +42,13 @@ const ImageForm = () => {
 
   const onSubmit = async (values: ImageFormValues) => {
     try {
-      const responsePromise = axios.post('/api/image', values);
+      const [resolution, model] = values.resolution.split(' ');
+
+      const responsePromise = axios.post('/api/image', {
+        ...values,
+        resolution,
+        model,
+      });
 
       toast.promise(responsePromise, {
         id: 'Image',
@@ -106,11 +112,20 @@ const ImageForm = () => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {amountOptions.map((amount, index) => (
-                    <SelectItem key={index} value={amount.value}>
-                      {amount.label}
-                    </SelectItem>
-                  ))}
+                  {amountOptions.map((amount, index) => {
+                    if (
+                      imageForm.getValues('resolution').includes('dall-e-3') &&
+                      amount.value !== '1'
+                    ) {
+                      return null;
+                    }
+
+                    return (
+                      <SelectItem key={index} value={amount.value}>
+                        {amount.label}
+                      </SelectItem>
+                    );
+                  })}
                 </SelectContent>
               </Select>
             </FormItem>
