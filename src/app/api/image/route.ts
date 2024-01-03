@@ -1,16 +1,16 @@
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { auth } from '@clerk/nextjs';
-import crypto from 'crypto';
 import { eq } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
 import { Bucket } from 'sst/node/bucket';
 
 import { Amount, Resolution } from '@/app/(routes)/image/data';
 import { db } from '@/db';
-import { image, users } from '@/db/schema';
+import { image, imagePrompt, users } from '@/db/schema';
 import { openai } from '@/lib/open-ai';
 import axios from 'axios';
+import { Image } from 'openai/resources/images.mjs';
 
 interface ImageRequest {
   prompt: string;
@@ -44,6 +44,10 @@ export const POST = async (req: Request) => {
       size: resolution,
     });
 
+    if (!response || !response.data) {
+      return new NextResponse('Internal Error', { status: 500 });
+    }
+
     const user = await db.query.users.findFirst({
       where: eq(users.userId, userId),
     });
@@ -52,50 +56,57 @@ export const POST = async (req: Request) => {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    response.data.forEach(async imageData => {
-      const { url: imageUrl } = imageData;
+    const promptId = await db
+      .insert(imagePrompt)
+      .values({
+        authorId: user.id,
+        prompt,
+        amount: parseInt(amount),
+        resolution,
+      })
+      .returning({ id: imagePrompt.id });
 
-      if (imageUrl) {
-        const key = crypto.randomUUID();
-        const bucket = Bucket.images.bucketName;
+    console.log(promptId);
 
-        const command = new PutObjectCommand({
-          ACL: 'public-read',
-          Key: key,
-          Bucket: bucket,
-          ContentType: 'image/png',
-        });
+    await Promise.all(
+      response.data.map(async (imageData: Image) => {
+        const { url: imageUrl } = imageData;
 
-        const objectUrl = `https://${bucket}.s3.amazonaws.com/${key}`;
+        if (imageUrl) {
+          const key = `${crypto.randomUUID()}.png`;
+          const bucket = Bucket.images.bucketName;
 
-        const s3Url = await getSignedUrl(new S3Client({}), command);
+          const command = new PutObjectCommand({
+            ACL: 'public-read',
+            Key: key,
+            Bucket: bucket,
+            ContentType: 'image/png',
+          });
 
-        const imageBlob = await fetch(imageUrl).then(res => res.blob());
+          const objectUrl = `https://${bucket}.s3.amazonaws.com/${key}`;
 
-        const s3Response = await axios.put(s3Url, imageBlob, {
-          headers: {
-            'Content-Type': 'image/png',
-          },
-        });
+          const s3Url = await getSignedUrl(new S3Client({}), command);
 
-        if (s3Response.status === 200) {
-          await db
-            .insert(image)
-            .values({
-              authorId: user.id,
+          const imageBlob = await fetch(imageUrl).then(res => res.blob());
+
+          const s3Response = await axios.put(s3Url, imageBlob);
+
+          if (s3Response.status === 200) {
+            await db.insert(image).values({
+              promptId: promptId[0].id,
               url: objectUrl,
-            })
-            .execute();
+            });
+          }
         }
-      }
+      }),
+    );
+
+    const imagePrompts = await db.query.imagePrompt.findMany({
+      where: eq(imagePrompt.authorId, user.id),
+      with: { images: true },
     });
 
-    const images = await db
-      .select()
-      .from(image)
-      .where(eq(image.authorId, user.id));
-
-    return NextResponse.json(images, { status: 200 });
+    return NextResponse.json(imagePrompts, { status: 200 });
   } catch (err) {
     console.log('IMAGE_ERROR:', err);
     return new NextResponse('Internal Error', { status: 500 });

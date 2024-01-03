@@ -7,7 +7,7 @@ import { useCode } from '@/hooks/useCode';
 import useScroll from '@/hooks/useScroll';
 import { cn } from '@/lib/utils';
 
-import Avatar from '@/components/custom-avatar';
+import CustomAvatar from '@/components/custom-avatar';
 import Empty from '@/components/empty';
 import ScrollToBottomArrow from '@/components/scroll-to-bottom-arrow';
 
@@ -81,9 +81,9 @@ const CodeGenerationContent = () => {
               border-black/10 bg-white p-4'
             >
               {message.role === 'user' ? (
-                <Avatar role={'user'} />
+                <CustomAvatar role={'user'} />
               ) : (
-                <Avatar role={'bot'} />
+                <CustomAvatar role={'bot'} />
               )}
               <Markdown
                 components={{

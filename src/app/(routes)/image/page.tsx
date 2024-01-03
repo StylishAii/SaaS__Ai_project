@@ -16,7 +16,7 @@ const ImageGenerationPage = async () => {
     redirect('/');
   }
 
-  const images = await fetchImages(userId);
+  const imagePrompts = await fetchImages(userId);
 
   return (
     <div className='flex h-full flex-col'>
@@ -27,7 +27,7 @@ const ImageGenerationPage = async () => {
         bgColor={bgColor}
         textColor={textColor}
       />
-      <ImageGenerationBody initialImages={images} />
+      <ImageGenerationBody initialImagePrompts={imagePrompts} />
     </div>
   );
 };

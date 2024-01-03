@@ -1,33 +1,79 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
+
+import { useImage } from '@/hooks/useImage';
+import useScroll from '@/hooks/useScroll';
 import { cn } from '@/lib/utils';
 
 import Empty from '@/components/empty';
-import GeneratedImage from '@/components/generated-image';
+import ScrollToBottomArrow from '@/components/scroll-to-bottom-arrow';
+import ImagePromptSection from './image-prompt-section';
 
-interface ImageContentProps {
-  images: string[];
-}
+const ImageContent = () => {
+  const { imagePrompts } = useImage();
+  const [isShowArrow, setIsShowArrow] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const divRef = useRef<HTMLDivElement>(null!);
 
-const ImageContent = ({ images }: ImageContentProps) => {
+  const scrollToBottom = () => {
+    if (divRef.current) {
+      divRef.current.scrollTo({
+        top: divRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  const handleScroll = () => {
+    setIsShowArrow(
+      divRef.current.scrollTop + divRef.current.clientHeight <
+        divRef.current.scrollHeight - 200,
+    );
+  };
+
+  useScroll(divRef, handleScroll);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isMounted) {
+      if (divRef.current) {
+        divRef.current.scrollTop = divRef.current.scrollHeight;
+      }
+    }
+  }, [isMounted]);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [imagePrompts]);
+
+  if (!isMounted) {
+    return null;
+  }
+
   return (
     <div
       className={cn(
-        'flex max-h-full min-h-[100px] w-full justify-center px-3 md:px-4',
-        images.length === 0 && 'h-full',
+        'relative flex max-h-full min-h-[100px] w-full justify-center px-3 md:px-4',
+        imagePrompts.length === 0 && 'h-full',
       )}
     >
-      {images.length === 0 ? (
+      {imagePrompts.length === 0 ? (
         <Empty label='No images generated.' />
       ) : (
-        <div className='no-scrollbar flex h-full w-full flex-col gap-4 overflow-auto'>
-          <div className='grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4'>
-            {images.map((image, index) => (
-              <GeneratedImage key={index} image={image} />
-            ))}
-          </div>
+        <div
+          ref={divRef}
+          className='no-scrollbar flex h-full w-full flex-col gap-4 overflow-auto'
+        >
+          {imagePrompts.map((imagePrompt, index) => (
+            <ImagePromptSection key={index} imagePrompt={imagePrompt} />
+          ))}
         </div>
       )}
+      <ScrollToBottomArrow isTrigger={isShowArrow} onClick={scrollToBottom} />
     </div>
   );
 };

@@ -1,10 +1,11 @@
 'use client';
 
-import { useCode } from '@/hooks/useCode';
-import { cn } from '@/lib/utils';
+import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
 import { useEffect } from 'react';
 
-import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
+import { useCode } from '@/hooks/useCode';
+import { cn } from '@/lib/utils';
+
 import CodeGenerationContent from './code-content';
 import CodeGenerationForm from './code-form';
 

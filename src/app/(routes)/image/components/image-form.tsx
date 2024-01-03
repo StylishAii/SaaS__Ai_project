@@ -3,10 +3,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
+import { useImage } from '@/hooks/useImage';
 import {
   ImageFormSchema,
   ImageFormValues,
@@ -24,14 +24,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Image } from '@/db/types';
 
-interface ImageFormProps {
-  setImages: Dispatch<SetStateAction<string[]>>;
-}
-
-const ImageForm = ({ setImages }: ImageFormProps) => {
+const ImageForm = () => {
   const router = useRouter();
+  const { setImagePrompts } = useImage();
   const imageForm = useForm<ImageFormValues>({
     resolver: zodResolver(ImageFormSchema),
     defaultValues: {
@@ -46,8 +42,6 @@ const ImageForm = ({ setImages }: ImageFormProps) => {
 
   const onSubmit = async (values: ImageFormValues) => {
     try {
-      setImages([]);
-
       const responsePromise = axios.post('/api/image', values);
 
       toast.promise(responsePromise, {
@@ -59,10 +53,8 @@ const ImageForm = ({ setImages }: ImageFormProps) => {
 
       const response = await responsePromise;
 
-      const urls = response.data.map((image: Image) => image.url);
-
       if (response.status === 200) {
-        setImages(urls);
+        setImagePrompts(response.data);
         imageForm.reset();
       }
     } catch (err: any) {
