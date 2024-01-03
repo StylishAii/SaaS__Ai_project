@@ -1,8 +1,14 @@
 'use client';
 
+import axios from 'axios';
+import { Trash2Icon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+
 import { ImagePromptWithImages } from '@/db/types';
 
 import CustomAvatar from '@/components/custom-avatar';
+import { Button } from '@/components/ui/button';
 import GeneratedImage from './generated-image';
 
 interface ImagePromptSectionProps {
@@ -10,6 +16,19 @@ interface ImagePromptSectionProps {
 }
 
 const ImagePromptSection = ({ imagePrompt }: ImagePromptSectionProps) => {
+  const router = useRouter();
+
+  const onDeleteImagePrompt = async () => {
+    try {
+      await axios.delete(`api/image/${imagePrompt.id}`);
+    } catch (err: any) {
+      toast.error(err.message);
+      console.log(err);
+    } finally {
+      router.refresh();
+    }
+  };
+
   return (
     <div className='flex flex-col gap-y-4'>
       <div
@@ -21,6 +40,15 @@ const ImagePromptSection = ({ imagePrompt }: ImagePromptSectionProps) => {
           {imagePrompt.prompt}
           <span> (x{imagePrompt.amount})</span>
         </p>
+        <div className='ml-auto'>
+          <Button
+            onClick={onDeleteImagePrompt}
+            size={'icon'}
+            variant={'destructive'}
+          >
+            <Trash2Icon />
+          </Button>
+        </div>
       </div>
       <div className='grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4'>
         {imagePrompt.images.map((image, index) => (

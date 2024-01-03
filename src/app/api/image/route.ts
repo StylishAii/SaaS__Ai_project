@@ -147,7 +147,7 @@ export const DELETE = async (req: Request) => {
 
     return new NextResponse('Deleted Images', { status: 200 });
   } catch (err: any) {
-    console.log('IMAGE_DELETE_ERROR:', err);
+    console.log('IMAGES_DELETE_ERROR:', err);
     return new NextResponse('Internal Error', { status: 500 });
   }
 };
