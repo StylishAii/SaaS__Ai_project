@@ -1,5 +1,3 @@
-'use server';
-
 import { eq } from 'drizzle-orm';
 import { orderBy } from 'lodash';
 import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
@@ -10,6 +8,8 @@ import { users } from '@/db/schema';
 export const fetchConversations = async (
   userId: string,
 ): Promise<ChatCompletionMessageParam[]> => {
+  'use server';
+
   const user = await db.query.users.findFirst({
     where: eq(users.userId, userId),
     with: { conversations: true },

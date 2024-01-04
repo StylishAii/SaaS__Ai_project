@@ -47,6 +47,7 @@ const ImageContent = () => {
   }, [isMounted]);
 
   useEffect(() => {
+    setIsShowArrow(false);
     scrollToBottom();
   }, [imagePrompts]);
 
