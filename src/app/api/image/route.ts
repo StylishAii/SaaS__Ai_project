@@ -1,4 +1,8 @@
-import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import {
+  DeleteObjectCommand,
+  PutObjectCommand,
+  S3Client,
+} from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { auth } from '@clerk/nextjs';
 import { eq } from 'drizzle-orm';
@@ -101,6 +105,7 @@ export const POST = async (req: Request) => {
           if (s3Response.status === 200) {
             await db.insert(image).values({
               promptId: promptId[0].id,
+              key,
               url: objectUrl,
             });
           }
@@ -139,6 +144,28 @@ export const DELETE = async (req: Request) => {
     if (!user) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
+
+    const imagePrompts = await db.query.imagePrompt.findMany({
+      where: eq(imagePrompt.authorId, user.id),
+      with: { images: true },
+      columns: {},
+    });
+
+    await Promise.all(
+      imagePrompts.map(
+        async ({ images }) =>
+          await Promise.all(
+            images.map(async ({ key }) => {
+              const command = new DeleteObjectCommand({
+                Key: key,
+                Bucket: Bucket.images.bucketName,
+              });
+
+              await new S3Client({}).send(command);
+            }),
+          ),
+      ),
+    );
 
     await db
       .delete(imagePrompt)

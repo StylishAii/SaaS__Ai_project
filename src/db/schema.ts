@@ -81,6 +81,7 @@ export const image = pgTable('image', {
   promptId: integer('prompt_id')
     .notNull()
     .references(() => imagePrompt.id, { onDelete: 'cascade' }),
+  key: text('key').notNull(),
   url: text('url').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
