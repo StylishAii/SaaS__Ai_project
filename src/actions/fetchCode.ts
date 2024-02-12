@@ -7,6 +7,8 @@ import { codeGenerationSetting } from '@/app/(routes)/code/data';
 import { db } from '@/db';
 import { users } from '@/db/schema';
 
+// TODO: Refactor DB query to only query code and sort using drizzle-orm
+
 export const fetchCode = async (
   userId: string,
 ): Promise<ChatCompletionMessageParam[]> => {
