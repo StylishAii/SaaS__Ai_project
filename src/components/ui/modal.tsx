@@ -1,6 +1,5 @@
 'use client';
 
-import { PropsWithChildren } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -8,6 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { PropsWithChildren } from 'react';
 
 interface ModalProps extends PropsWithChildren {
   title: string;

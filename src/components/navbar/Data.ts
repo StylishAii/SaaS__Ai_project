@@ -52,4 +52,3 @@ export const links = [
     textColor: 'text-purple-500',
   },
 ];
-

@@ -21,4 +21,4 @@ export const audioLengthOptions = [
   { value: '15', label: '15 Seconds' },
 ] as const;
 
-export type AudioLength = typeof audioLengthOptions[number]['value'];
+export type AudioLength = (typeof audioLengthOptions)[number]['value'];

@@ -24,7 +24,7 @@ const CustomAvatar = ({ role }: CustomAvatarProps) => {
 
   return (
     <div className='relative'>
-      <div className='flex h-8 w-8 items-center justify-center bg-secondary rounded-full'>
+      <div className='flex h-8 w-8 items-center justify-center rounded-full bg-secondary'>
         <BotIcon className='h-6 w-6' />
       </div>
     </div>

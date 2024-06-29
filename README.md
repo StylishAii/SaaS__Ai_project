@@ -41,7 +41,11 @@ These commands are essential for running and developing the AI SaaS platform loc
 - NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=
 - OPENAI_API_KEY=
 - REPLICATE_API_TOKEN=
-- DATABASE_URL=
+- DB_HOST=
+- DB_PORT=
+- DB_NAME=
+- DB_USER=
+- DB_PASSWORD=
 
 ## Deploy to production
 
