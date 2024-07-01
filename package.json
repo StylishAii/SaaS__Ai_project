@@ -10,11 +10,11 @@
     "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
     "migration:generate": "drizzle-kit generate:pg --schema=./src/db/schema.ts",
     "migration:push": "node -r esbuild-register ./src/db/migration.ts",
-    "migrate": "bun run migration:generate && bun run migration:push"
+    "migrate": "npm run migration:generate && npm run migration:push"
   },
   "dependencies": {
     "@aws-sdk/s3-request-presigner": "^3.485.0",
-    "@clerk/nextjs": "^4.29.1",
+    "@clerk/nextjs": "^4.31.3",
     "@hookform/resolvers": "^3.3.4",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.5",
@@ -26,6 +26,7 @@
     "axios": "^1.6.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "dotenv": "^16.4.5",
     "drizzle-orm": "^0.29.3",
     "framer-motion": "^10.17.9",
     "lodash": "^4.17.21",
