@@ -17,17 +17,21 @@ Welcome to our AI SaaS Platform, your all-in-one solution for generating dynamic
 - **Initial Context Prompt**: Provide an initial context prompt to guide the content generation process and ensure that the generated content aligns with your specific requirements and preferences.
 - **Parameters and Settings**: Fine-tune the generation process by adjusting parameters and settings according to your needs.
 
-## Run AI SaaS
+## Deployment URL
 
-- **`relay forward -b ai-saas`**: This command starts the relay server and forwards requests to the specified backend named "ai-saas". It's typically used in environments where multiple backends are running, and the relay server acts as a gateway or proxy to route requests to the appropriate backend.
+The AI SaaS platform is deployed and accessible at: [https://d2czldtmzevope.cloudfront.net/](https://d2czldtmzevope.cloudfront.net/)
+
+This is coupled with a database run on an EC2 instance using docker and other AWS resources created with SST.
+
+## Run AI SaaS (Yourself)
 
 - **`docker-compose up`**: This command orchestrates the startup of Docker containers as defined in the `compose.yaml` file. It's commonly used to start all the services and dependencies required for the AI SaaS platform, such as databases, message brokers, or other microservices.
 
-- **`bunx drizzle-kit studio`**: This command starts the Drizzle Kit Studio, which is a graphical user interface (GUI) tool used for managing and developing applications built with Drizzle, a framework or toolset used in the project.
+- **`npx drizzle-kit studio`**: This command starts the Drizzle Kit Studio, which is a graphical user interface (GUI) tool used for managing and developing applications built with Drizzle, a framework or toolset used in the project.
 
-- **`bunx sst dev`**: This command starts the Serverless Stack (SST) framework in development mode. SST is a framework used for building serverless applications on AWS (Amazon Web Services). Running in development mode allows developers to test and iterate on their serverless application locally before deploying it to the cloud.
+- **`npx sst dev`**: This command starts the Serverless Stack (SST) framework in development mode. SST is a framework used for building serverless applications on AWS (Amazon Web Services). Running in development mode allows developers to test and iterate on their serverless application locally before deploying it to the cloud.
 
-- **`bun run dev`**: This command starts the development server for the Bun framework. Bun is likely the framework or toolset used for developing the AI SaaS platform. Running the development server enables developers to preview and test their changes in a local environment before deploying them to production.
+- **`npm run dev`**: This command starts the development server for the Npm framework. Npm is likely the framework or toolset used for developing the AI SaaS platform. Running the development server enables developers to preview and test their changes in a local environment before deploying them to production.
 
 These commands are essential for running and developing the AI SaaS platform locally, providing a streamlined workflow for development and testing. Adjustments or additional commands may be necessary based on the specific setup and requirements of your project.
 
@@ -49,7 +53,7 @@ These commands are essential for running and developing the AI SaaS platform loc
 
 ## Deploy to production
 
-`bunx sst deploy --stage prod`: This command deploys the AI SaaS platform to Amazon Web Services (AWS) using the Serverless Stack (SST) framework. The --stage prod flag specifies that the deployment is intended for the production stage, ensuring that the resources are provisioned in the production environment.
+`npx sst deploy --stage prod`: This command deploys the AI SaaS platform to Amazon Web Services (AWS) using the Serverless Stack (SST) framework. The --stage prod flag specifies that the deployment is intended for the production stage, ensuring that the resources are provisioned in the production environment.
 
 ## Technologies Used
 
