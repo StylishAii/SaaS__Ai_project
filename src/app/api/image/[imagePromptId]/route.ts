@@ -1,5 +1,5 @@
 import { DeleteObjectCommand, S3Client } from '@aws-sdk/client-s3';
-import { auth } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs/server';
 import { eq } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
 import { Bucket } from 'sst/node/bucket';
