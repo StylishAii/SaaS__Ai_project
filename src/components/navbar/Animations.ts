@@ -4,8 +4,8 @@ const navBarVariants = (isWidth: boolean, isHeight: boolean): Variants => ({
   open: {
     width: isWidth ? '100%' : 450,
     height: isHeight || isWidth ? '100%' : 650,
-    top: -10,
-    left: -10,
+    top: isWidth ? -16 : -10,
+    left: isWidth ? -16 : -10,
     borderRadius: isWidth ? 0 : 30,
     transition: { duration: 0.7, ease: [0.76, 0, 0.24, 1] },
   },
