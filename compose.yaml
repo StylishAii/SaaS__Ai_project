@@ -1,9 +1,41 @@
 services:
+  web:
+    container_name: ai-saas-web
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: Dockerfile
+    entrypoint: ['./entrypoint.sh']
+    env_file: .env
+    environment:
+      NODE_ENV: development
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: ${DB_USER}
+    ports:
+      - 3000:3000
+    user: node
+    develop:
+      watch:
+        - path: ./package.json
+          action: rebuild
+        - path: ./package-lock.json
+          action: rebuild
+        - path: ./next.config.js
+          action: rebuild
+        - path: ./tailwind.config.ts
+          action: rebuild
+        - path: .
+          target: /usr/src/app
+          action: sync
+
   db:
     container_name: ai-saas-db
     image: postgres
     ports:
       - 5432:5432
+    env_file: .env
     environment:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}

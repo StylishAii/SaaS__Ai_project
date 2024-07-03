@@ -1,20 +1,13 @@
-import {
-  DeleteObjectCommand,
-  PutObjectCommand,
-  S3Client,
-} from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { auth } from '@clerk/nextjs/server';
 import { eq } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
-import { Bucket } from 'sst/node/bucket';
+import { Image, ImageGenerateParams } from 'openai/resources/images.mjs';
 
 import { Amount } from '@/app/(routes)/image/data';
 import { db } from '@/db';
 import { image, imagePrompt, users } from '@/db/schema';
+import { deleteImageFromAzureBlob, uploadImageToAzureBlob } from '@/lib/azure';
 import { openai } from '@/lib/open-ai';
-import axios from 'axios';
-import { Image, ImageGenerateParams } from 'openai/resources/images.mjs';
 
 interface ImageRequest {
   prompt: string;
@@ -84,30 +77,19 @@ export const POST = async (req: Request) => {
         const { url: imageUrl } = imageData;
 
         if (imageUrl) {
-          const key = `${crypto.randomUUID()}.png`;
-          const bucket = Bucket.images.bucketName;
+          try {
+            const { key, url } = await uploadImageToAzureBlob(
+              imageUrl,
+              process.env.AZURE_STORAGE_CONTAINER,
+            );
 
-          const command = new PutObjectCommand({
-            ACL: 'public-read',
-            Key: key,
-            Bucket: bucket,
-            ContentType: 'image/png',
-          });
-
-          const objectUrl = `https://${bucket}.s3.amazonaws.com/${key}`;
-
-          const s3Url = await getSignedUrl(new S3Client({}), command);
-
-          const imageBlob = await fetch(imageUrl).then(res => res.blob());
-
-          const s3Response = await axios.put(s3Url, imageBlob);
-
-          if (s3Response.status === 200) {
             await db.insert(image).values({
               promptId: promptId[0].id,
               key,
-              url: objectUrl,
+              url,
             });
+          } catch (err) {
+            console.error('Upload failed', err);
           }
         }
       }),
@@ -156,12 +138,10 @@ export const DELETE = async (req: Request) => {
         async ({ images }) =>
           await Promise.all(
             images.map(async ({ key }) => {
-              const command = new DeleteObjectCommand({
-                Key: key,
-                Bucket: Bucket.images.bucketName,
-              });
-
-              await new S3Client({}).send(command);
+              await deleteImageFromAzureBlob(
+                key,
+                process.env.AZURE_STORAGE_CONTAINER,
+              );
             }),
           ),
       ),

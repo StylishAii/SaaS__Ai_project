@@ -1,12 +1,11 @@
-import { DeleteObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { auth } from '@clerk/nextjs/server';
 import { eq } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
-import { Bucket } from 'sst/node/bucket';
 
 import { db } from '@/db';
 import { imagePrompt, users } from '@/db/schema';
 import { openai } from '@/lib/open-ai';
+import { deleteImageFromAzureBlob } from '@/lib/azure';
 
 interface RequestProps {
   params: { imagePromptId: number };
@@ -44,12 +43,10 @@ export const DELETE = async (req: Request, { params }: RequestProps) => {
 
     await Promise.all(
       prompt.images.map(async ({ key }) => {
-        const command = new DeleteObjectCommand({
-          Key: key,
-          Bucket: Bucket.images.bucketName,
-        });
-
-        await new S3Client({}).send(command);
+        await deleteImageFromAzureBlob(
+          key,
+          process.env.AZURE_STORAGE_CONTAINER,
+        );
       }),
     );
 

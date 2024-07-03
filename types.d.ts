@@ -13,5 +13,8 @@ declare namespace NodeJS {
     DB_PASSWORD: string;
     OPENAI_API_KEY: string;
     REPLICATE_API_TOKEN: string;
+    AZURE_STORAGE_ACCOUNT: string;
+    AZURE_STORAGE_ACCOUNT_KEY: string;
+    AZURE_STORAGE_CONTAINER: string;
   }
 }
