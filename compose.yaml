@@ -14,7 +14,7 @@ services:
       DB_PORT: 5432
       DB_USER: ${DB_USER}
     ports:
-      - 3000:3000
+      - 80:3000
     user: node
     develop:
       watch:
