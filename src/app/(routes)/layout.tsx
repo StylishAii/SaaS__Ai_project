@@ -1,7 +1,14 @@
+import { auth } from '@clerk/nextjs/server';
+import { redirect } from 'next/navigation';
+
 import Header from '@/components/navbar/header';
 
 const RoutesLayout = ({ children }: { children: React.ReactNode }) => {
-  // TODO: Show Navbar in 2XL+ screens
+  const { userId } = auth();
+
+  if (!userId) {
+    redirect('/');
+  }
 
   return (
     <>
